@@ -1,31 +1,13 @@
-name: Manual Build
+name: Windows x64 Build
 
 on:
   workflow_dispatch:
     inputs:
-      platform:
-        type: choice
-        description: Build platform
-        required: true
-        options:
-          - windows-latest
-          - windows-11-arm
-          - macos-14
-          - macos-15-intel
-          - ubuntu-22.04
-          - ubuntu-22.04-arm
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-      target:
-        type: string
-        description: Build target (leave empty for default)
-        required: false
-        default: ''
       build-args:
         type: string
-        description: Additional build arguments
+        description: Additional build arguments (e.g., --bundles nsis)
         required: false
-        default: ''
+        default: '--bundles nsis'
       upload-artifacts:
         type: boolean
         description: Upload build artifacts
@@ -36,7 +18,7 @@ jobs:
   build:
     permissions:
       contents: write
-    runs-on: ${{ github.event.inputs.platform }}
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -48,13 +30,12 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           rustflags: ''
-        if: startsWith(github.event.inputs.platform, 'macos') || startsWith(github.event.inputs.platform, 'windows')
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
-          key: ${{ github.event.inputs.platform }}
+          key: windows-latest
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -62,60 +43,26 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install additional system dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            build-essential \
-            curl \
-            wget \
-            file \
-            libssl-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            patchelf
-
       - name: Install frontend dependencies
         run: npm install
-
-      - name: rustup install target
-        if: ${{ github.event.inputs.target != '' }}
-        run: rustup target add ${{ github.event.inputs.target }}
 
       - id: tauri-build
         name: Build with tauri-action
         uses: tauri-apps/tauri-action@cf3eb9b18add8548a40584695215c80ab7274f31
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NO_STRIP: ${{ startsWith(github.event.inputs.platform, 'ubuntu') }}
         with:
-          args: --verbose ${{ github.event.inputs.build-args }} ${{ github.event.inputs.target != '' && '--target' || ''  }} ${{ github.event.inputs.target }}
+          args: --verbose ${{ github.event.inputs.build-args }}
           retryAttempts: 3
 
       - name: Upload Windows Artifacts
-        if: ${{ startsWith(github.event.inputs.platform, 'windows') && github.event.inputs.upload-artifacts == true }}
+        if: ${{ github.event.inputs.upload-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
-          name: windows_${{ github.event.inputs.platform }}${{ github.event.inputs.target && format('_{0}', github.event.inputs.target) || '' }}_artifacts
+          name: windows_x64_artifacts
           path: |
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/bundle/**/*.exe
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/release/bundle/**/*.exe
-          retention-days: 7
-          compression-level: 6
-          if-no-files-found: warn
-
-      - name: Upload Linux/macOS Artifacts
-        if: ${{ !startsWith(github.event.inputs.platform, 'windows') && github.event.inputs.upload-artifacts == true }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ runner.os }}_${{ github.event.inputs.platform }}${{ github.event.inputs.target && format('_{0}', github.event.inputs.target) || '' }}_artifacts
-          path: |
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/**/*.rpm
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/**/*.deb
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/**/*.AppImage
-            src-tauri/target/${{ github.event.inputs.target || 'release' }}/**/*.dmg
+            src-tauri/target/release/bundle/**/*.exe
+            src-tauri/target/release/**/*.exe
           retention-days: 7
           compression-level: 6
           if-no-files-found: warn
