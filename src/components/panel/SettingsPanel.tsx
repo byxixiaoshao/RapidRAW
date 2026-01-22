@@ -104,11 +104,7 @@ const backendOptions: OptionItem[] = [
   { value: 'gl', label: 'OpenGL' },
 ];
 
-const settingCategories = [
-  { id: 'general', label: 'General', icon: SlidersHorizontal },
-  { id: 'processing', label: 'Processing', icon: Cpu },
-  { id: 'shortcuts', label: 'Shortcuts', icon: Keyboard },
-];
+
 
 const KeybindItem = ({ keys, description }: KeybindItemProps) => (
   <div className="flex justify-between items-center py-2">
@@ -250,6 +246,12 @@ export default function SettingsPanel({
   const [testStatus, setTestStatus] = useState<TestStatus>({ message: '', success: null, testing: false });
   const [hasInteractedWithLivePreview, setHasInteractedWithLivePreview] = useState(false);
 
+  const settingCategories = [
+    { id: 'general', label: t('settings.tabs.general'), icon: SlidersHorizontal },
+    { id: 'processing', label: t('settings.tabs.processing'), icon: Cpu },
+    { id: 'shortcuts', label: t('settings.tabs.shortcuts'), icon: Keyboard },
+  ];
+
   const [aiProvider, setAiProvider] = useState(appSettings?.aiProvider || 'cpu');
   const [aiConnectorAddress, setAiConnectorAddress] = useState<string>(appSettings?.aiConnectorAddress || '');
   const [newShortcut, setNewShortcut] = useState('');
@@ -338,13 +340,12 @@ export default function SettingsPanel({
 
   const handleClearSidecars = () => {
     setConfirmModalState({
-      confirmText: 'Delete All Edits',
+      confirmText: t('settings.dataActions.clearSidecars'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message:
-        'Are you sure you want to delete all sidecar files?\n\nThis will permanently remove all your edits for all images inside the current base folder and its subfolders.',
+      message: t('settings.dataActions.clearSidecarsMessage'),
       onConfirm: executeClearSidecars,
-      title: 'Confirm Deletion',
+      title: t('settings.dataActions.clearSidecarsTitle'),
     });
   };
 
@@ -368,13 +369,12 @@ export default function SettingsPanel({
 
   const handleClearAiTags = () => {
     setConfirmModalState({
-      confirmText: 'Clear AI Tags',
+      confirmText: t('settings.dataActions.clearAiTags'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message:
-        'Are you sure you want to remove all AI-generated tags from all images in the current base folder?\n\nThis will not affect user-added tags. This action cannot be undone.',
+      message: t('settings.dataActions.clearAiTagsMessage'),
       onConfirm: executeClearAiTags,
-      title: 'Confirm AI Tag Deletion',
+      title: t('settings.dataActions.clearAiTagsTitle'),
     });
   };
 
@@ -398,13 +398,12 @@ export default function SettingsPanel({
 
   const handleClearTags = () => {
     setConfirmModalState({
-      confirmText: 'Clear All Tags',
+      confirmText: t('settings.dataActions.clearAllTags'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message:
-        'Are you sure you want to remove all AI-generated and user-added tags from all images in the current base folder?\n\nThis action cannot be undone.',
+      message: t('settings.dataActions.clearAllTagsMessage'),
       onConfirm: executeClearTags,
-      title: 'Confirm All Tag Deletion',
+      title: t('settings.dataActions.clearAllTagsTitle'),
     });
   };
 
@@ -420,14 +419,12 @@ export default function SettingsPanel({
 
   const handleSetTransparent = (transparent: boolean) => {
     setConfirmModalState({
-      confirmText: 'Toggle Transparency',
+      confirmText: t('settings.transparency.toggle'),
       confirmVariant: 'primary',
       isOpen: true,
-      message: `Are you sure you want to ${transparent ? 'enable' : 'disable'} window transparency effects?\n\n${
-        transparent ? 'These effects may reduce application performance.' : ''
-      }\n\nThe application will relaunch to make this change.`,
+      message: transparent ? t('settings.transparency.enableMessage') : t('settings.transparency.disableMessage'),
       onConfirm: () => executeSetTransparent(transparent),
-      title: 'Confirm Window Transparency',
+      title: t('settings.transparency.confirm'),
     });
   };
 
@@ -451,13 +448,12 @@ export default function SettingsPanel({
 
   const handleClearCache = () => {
     setConfirmModalState({
-      confirmText: 'Clear Cache',
+      confirmText: t('settings.dataActions.clearCache'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message:
-        'Are you sure you want to clear the thumbnail cache?\n\nAll thumbnails will need to be regenerated, which may be slow for large folders.',
+      message: t('settings.dataActions.clearCacheMessage'),
       onConfirm: executeClearCache,
-      title: 'Confirm Cache Deletion',
+      title: t('settings.dataActions.clearCacheTitle'),
     });
   };
 
@@ -465,12 +461,12 @@ export default function SettingsPanel({
     if (!aiConnectorAddress) {
       return;
     }
-    setTestStatus({ testing: true, message: 'Testing...', success: null });
+    setTestStatus({ testing: true, message: t('settings.ai.testing'), success: null });
     try {
       await invoke(Invokes.TestAIConnectorConnection, { address: aiConnectorAddress });
-      setTestStatus({ testing: false, message: 'Connection successful!', success: true });
+      setTestStatus({ testing: false, message: t('settings.ai.connectionSuccess'), success: true });
     } catch (err) {
-      setTestStatus({ testing: false, message: `Connection failed.`, success: false });
+      setTestStatus({ testing: false, message: t('settings.ai.connectionFailed'), success: false });
       console.error('AI Connector connection test failed:', err);
     } finally {
       setTimeout(() => setTestStatus({ testing: false, message: '', success: null }), EXECUTE_TIMEOUT);
@@ -566,7 +562,7 @@ export default function SettingsPanel({
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.title')}</h2>
                   <div className="space-y-6">
-                    <SettingItem label="Theme" description="Change the look and feel of the application.">
+                    <SettingItem label={t('settings.theme.label')} description={t('settings.theme.description')}>
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, theme: value })}
                         options={THEMES.map((theme: ThemeProps) => ({ value: theme.id, label: theme.name }))}
@@ -575,20 +571,20 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      description="Dynamically changes editor colors based on the current image."
-                      label="Editor Theme"
+                      description={t('settings.editorTheme.description')}
+                      label={t('settings.editorTheme.label')}
                     >
                       <Switch
                         checked={appSettings?.adaptiveEditorTheme ?? false}
                         id="adaptive-theme-toggle"
-                        label="Adaptive Editor Theme"
+                        label={t('settings.editorTheme.adaptive')}
                         onChange={(checked) => onSettingsChange({ ...appSettings, adaptiveEditorTheme: checked })}
                       />
                     </SettingItem>
 
                     <SettingItem
-                      label="EXIF Library Sorting"
-                      description="Read EXIF data (ISO, aperture, etc.) on folder load at the cost of slower folder loading when using EXIF sorting."
+                      label={t('settings.exif.label')}
+                      description={t('settings.exif.description')}
                     >
                       <Switch
                         checked={appSettings?.enableExifReading ?? false}
@@ -599,13 +595,13 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      description="Enables or disables transparency effects for the application window. Relaunch required."
+                      description={t('settings.transparency.description')}
                       label="Window Effects"
                     >
                       <Switch
                         checked={appSettings?.transparent ?? true}
                         id="window-effects-toggle"
-                        label="Transparency"
+                        label={t('settings.transparency.label')}
                         onChange={handleSetTransparent}
                       />
                     </SettingItem>
@@ -706,8 +702,8 @@ export default function SettingsPanel({
                       />
                     </SettingItem>
                     <SettingItem
-                      label="Tagging Shortcuts"
-                      description="A list of tags that will appear as shortcuts in the tagging context menu."
+                      label={t('settings.shortcuts.tagging')}
+                      description={t('settings.shortcuts.taggingDescription')}
                     >
                       <div>
                         <div className="flex flex-wrap gap-2 p-2 bg-bg-primary rounded-md min-h-[40px] border border-border-color mb-2 items-center">
@@ -751,13 +747,13 @@ export default function SettingsPanel({
                             value={newShortcut}
                             onChange={(e) => setNewShortcut(e.target.value)}
                             onKeyDown={handleInputKeyDown}
-                            placeholder="Add a new shortcut..."
+                            placeholder={t('settings.shortcuts.enterTag')}
                             className="pr-10"
                           />
                           <button
                             onClick={handleAddShortcut}
                             className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface"
-                            title="Add shortcut"
+                            title={t('settings.shortcuts.addShortcut')}
                           >
                             <Plus size={18} />
                           </button>
@@ -807,8 +803,8 @@ export default function SettingsPanel({
                   <h2 className="text-xl font-semibold mb-6 text-accent">Processing Engine</h2>
                   <div className="space-y-6">
                     <SettingItem
-                      description="Higher resolutions provide a sharper preview but may impact performance on less powerful systems."
-                      label="Preview Resolution"
+                      description={t('settings.processing.previewResolutionDescription')}
+                      label={t('settings.processing.previewResolution')}
                     >
                       <Dropdown
                         onChange={(value: any) => handleProcessingSettingChange('editorPreviewResolution', value)}
@@ -875,8 +871,8 @@ export default function SettingsPanel({
                     </div>
 
                     <SettingItem
-                      label="RAW Highlight Recovery"
-                      description="Controls how much detail is recovered from clipped highlights in RAW files. Higher values recover more detail but can introduce purple artefacts."
+                      label={t('settings.processing.highlightCompression')}
+                      description={t('settings.processing.highlightCompressionDescription')}
                     >
                       <Slider
                         label="Amount"
@@ -892,8 +888,8 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label="Processing Backend"
-                      description="Select the graphics API. 'Auto' is recommended. May fix crashes on some systems."
+                      label={t('settings.processing.backend')}
+                      description={t('settings.processing.backendDescription')}
                     >
                       <Dropdown
                         onChange={(value: any) => handleProcessingSettingChange('processingBackend', value)}
@@ -903,8 +899,8 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label="Linux Compatibility Mode"
-                      description="Enable workarounds for common GPU driver and display server (e.g., Wayland) issues. May improve stability or performance on some systems."
+                      label={t('settings.processing.linuxOptimization')}
+                      description={t('settings.processing.linuxOptimizationDescription')}
                     >
                       <Switch
                         checked={processingSettings.linuxGpuOptimization}
@@ -918,10 +914,10 @@ export default function SettingsPanel({
                       <>
                         <div className="p-3 bg-blue-900/20 text-blue-300 border border-blue-500/50 rounded-lg text-sm flex items-center gap-3">
                           <Info size={18} />
-                          <p>Changes to the processing engine require an application restart to take effect.</p>
+                          <p>{t('settings.processing.restartRequired')}</p>
                         </div>
                         <div className="flex justify-end">
-                          <Button onClick={handleSaveAndRelaunch}>Save & Relaunch</Button>
+                          <Button onClick={handleSaveAndRelaunch}>{t('settings.processing.saveAndRestart')}</Button>
                         </div>
                       </>
                     )}
@@ -980,8 +976,8 @@ export default function SettingsPanel({
                           </ul>
                           <div className="space-y-6">
                             <SettingItem
-                              label="AI Connector Address"
-                              description="Enter the address and port of your running AI Connector instance. Required for generative AI features."
+                              label={t('settings.ai.aiConnectorAddress')}
+                              description={t('settings.ai.aiConnectorAddressDescription')}
                             >
                               <div className="flex items-center gap-2">
                                 <Input
@@ -999,7 +995,7 @@ export default function SettingsPanel({
                                   disabled={testStatus.testing || !aiConnectorAddress}
                                   onClick={handleTestConnection}
                                 >
-                                  {testStatus.testing ? 'Testing...' : 'Test'}
+                                  {testStatus.testing ? t('settings.ai.testing') : t('settings.ai.testConnection')}
                                 </Button>
                               </div>
                               {testStatus.message && (

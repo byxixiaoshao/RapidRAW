@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, forwardRef, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-shell';
@@ -250,6 +251,7 @@ const groupImagesByFolder = (images: ImageFile[], rootPath: string | null) => {
 };
 
 function SearchInput({ indexingProgress, isIndexing, searchCriteria, setSearchCriteria }: SearchInputProps) {
+  const { t } = useTranslation();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -333,12 +335,12 @@ function SearchInput({ indexingProgress, isIndexing, searchCriteria, setSearchCr
   const isActive = isSearchActive || tags.length > 0 || !!text;
   const placeholderText =
     isIndexing && indexingProgress.total > 0
-      ? `Indexing... (${indexingProgress.current}/${indexingProgress.total})`
+      ? t('mainLibrary.search.indexingProgress', { current: indexingProgress.current, total: indexingProgress.total })
       : isIndexing
-      ? 'Indexing Images...'
+      ? t('mainLibrary.search.indexing')
       : tags.length > 0
-      ? 'Add another tag...'
-      : 'Search by tag or filename...';
+      ? t('mainLibrary.search.addTag')
+      : t('mainLibrary.search.placeholder');
 
   const INACTIVE_WIDTH = 48;
   const PADDING_AND_ICONS_WIDTH = 105;
@@ -426,7 +428,7 @@ function SearchInput({ indexingProgress, isIndexing, searchCriteria, setSearchCr
               transition={{ duration: 0.15 }}
               className="flex-shrink-0 bg-bg-primary text-text-secondary text-xs px-2 py-1 rounded-md whitespace-nowrap"
             >
-              Separate tags with <kbd className="font-sans font-semibold">,</kbd>
+              {t('mainLibrary.search.separateTags', { comma: <kbd className="font-sans font-semibold">,</kbd> })}
             </motion.div>
           )}
         </AnimatePresence>
@@ -444,7 +446,7 @@ function SearchInput({ indexingProgress, isIndexing, searchCriteria, setSearchCr
           <button
             onClick={clearSearch}
             className="p-1.5 rounded-md text-text-secondary hover:text-text-primary hover:bg-bg-primary flex-shrink-0"
-            title="Clear search"
+            title={t('mainLibrary.search.clear')}
           >
             <X className="h-5 w-5" />
           </button>
@@ -460,6 +462,7 @@ function SearchInput({ indexingProgress, isIndexing, searchCriteria, setSearchCr
 }
 
 function ColorFilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionProps) {
+  const { t } = useTranslation();
   const [lastClickedColor, setLastClickedColor] = useState<string | null>(null);
   const allColors = useMemo(() => [...COLOR_LABELS, { name: 'none', color: '#9ca3af' }], []);
 
@@ -493,11 +496,11 @@ function ColorFilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionP
 
   return (
     <div>
-      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Filter by Color Label</div>
+      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.filters.colorLabel')}</div>
       <div className="flex flex-wrap gap-3 px-3 py-2">
         {allColors.map((color: Color) => {
           const isSelected = (filterCriteria.colors || []).includes(color.name);
-          const title = color.name === 'none' ? 'No Label' : color.name.charAt(0).toUpperCase() + color.name.slice(1);
+          const title = color.name === 'none' ? t('mainLibrary.filters.noLabel') : color.name.charAt(0).toUpperCase() + color.name.slice(1);
           return (
             <button
               key={color.name}
@@ -571,11 +574,16 @@ function DropdownMenu({ buttonContent, buttonTitle, children, contentClassName =
 }
 
 function ThumbnailSizeOptions({ selectedSize, onSelectSize }: ThumbnailSizeProps) {
+  const { t } = useTranslation();
   return (
     <>
-      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Thumbnail Size</div>
+      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.thumbnail.size')}</div>
       {thumbnailSizeOptions.map((option: ThumbnailSizeOption) => {
         const isSelected = selectedSize === option.id;
+        let label = option.label;
+        if (option.id === ThumbnailSize.Small) label = t('mainLibrary.thumbnail.small');
+        if (option.id === ThumbnailSize.Medium) label = t('mainLibrary.thumbnail.medium');
+        if (option.id === ThumbnailSize.Large) label = t('mainLibrary.thumbnail.large');
         return (
           <button
             className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center justify-between transition-colors duration-150 ${
@@ -585,7 +593,7 @@ function ThumbnailSizeOptions({ selectedSize, onSelectSize }: ThumbnailSizeProps
             onClick={() => onSelectSize(option.id)}
             role="menuitem"
           >
-            <span>{option.label}</span>
+            <span>{label}</span>
             {isSelected && <Check size={16} />}
           </button>
         );
@@ -595,11 +603,15 @@ function ThumbnailSizeOptions({ selectedSize, onSelectSize }: ThumbnailSizeProps
 }
 
 function ThumbnailAspectRatioOptions({ selectedAspectRatio, onSelectAspectRatio }: ThumbnailAspectRatioProps) {
+  const { t } = useTranslation();
   return (
     <>
-      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Thumbnail Fit</div>
+      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.thumbnail.aspectRatio')}</div>
       {thumbnailAspectRatioOptions.map((option: ThumbnailAspectRatioOption) => {
         const isSelected = selectedAspectRatio === option.id;
+        let label = option.label;
+        if (option.id === ThumbnailAspectRatio.Cover) label = t('mainLibrary.thumbnail.fillSquare');
+        if (option.id === ThumbnailAspectRatio.Contain) label = t('mainLibrary.thumbnail.originalRatio');
         return (
           <button
             className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center justify-between transition-colors duration-150 ${
@@ -609,7 +621,7 @@ function ThumbnailAspectRatioOptions({ selectedAspectRatio, onSelectAspectRatio 
             onClick={() => onSelectAspectRatio(option.id)}
             role="menuitem"
           >
-            <span>{option.label}</span>
+            <span>{label}</span>
             {isSelected && <Check size={16} />}
           </button>
         );
@@ -619,6 +631,7 @@ function ThumbnailAspectRatioOptions({ selectedAspectRatio, onSelectAspectRatio 
 }
 
 function FilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionProps) {
+  const { t } = useTranslation();
   const handleRatingFilterChange = (rating: number | undefined) => {
     setFilterCriteria((prev: Partial<FilterCriteria>) => ({ ...prev, rating }));
   };
@@ -631,7 +644,7 @@ function FilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionProps)
     <>
       <div className="space-y-4">
         <div>
-          <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Filter by Rating</div>
+          <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.filters.rating')}</div>
           {ratingFilterOptions.map((option: KeyValueLabel) => {
             const isSelected = filterCriteria.rating === option.value;
             return (
@@ -656,7 +669,7 @@ function FilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionProps)
         </div>
 
         <div>
-          <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Filter by File Type</div>
+          <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.filters.fileType')}</div>
           {rawStatusOptions.map((option: KeyValueLabel) => {
             const isSelected = (filterCriteria.rawStatus || RawStatus.All) === option.key;
             return (
@@ -684,6 +697,7 @@ function FilterOptions({ filterCriteria, setFilterCriteria }: FilterOptionProps)
 }
 
 function SortOptions({ sortCriteria, setSortCriteria, sortOptions }: SortOptionsProps) {
+  const { t } = useTranslation();
   const handleKeyChange = (key: string) => {
     setSortCriteria((prev: SortCriteria) => ({ ...prev, key }));
   };
@@ -698,10 +712,10 @@ function SortOptions({ sortCriteria, setSortCriteria, sortOptions }: SortOptions
   return (
     <>
       <div className="px-3 py-2 relative flex items-center">
-        <div className="text-xs font-semibold text-text-secondary uppercase">Sort by</div>
+        <div className="text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.sort.by')}</div>
         <button
           onClick={handleOrderToggle}
-          title={`Sort ${sortCriteria.order === SortDirection.Ascending ? 'Descending' : 'Ascending'}`}
+          title={sortCriteria.order === SortDirection.Ascending ? t('mainLibrary.sort.descending') : t('mainLibrary.sort.ascending')}
           className="absolute top-1/2 right-3 -translate-y-1/2 p-1 bg-transparent border-none text-text-secondary hover:text-text-primary focus:outline-none focus:ring-1 focus:ring-accent rounded"
         >
           {sortCriteria.order === SortDirection.Ascending ? (
@@ -746,7 +760,7 @@ function SortOptions({ sortCriteria, setSortCriteria, sortOptions }: SortOptions
             onClick={() => !option.disabled && handleKeyChange(option.key)}
             role="menuitem"
             disabled={option.disabled}
-            title={option.disabled ? 'Enable EXIF Reading in Settings to use this option.' : undefined}
+            title={option.disabled ? t('mainLibrary.sort.exifEnable') : undefined}
           >
             <span>{option.label}</span>
             {isSelected && <Check size={16} />}
@@ -758,9 +772,10 @@ function SortOptions({ sortCriteria, setSortCriteria, sortOptions }: SortOptions
 }
 
 function ViewModeOptions({ mode, setMode }: { mode: LibraryViewMode; setMode: (m: LibraryViewMode) => void }) {
+  const { t } = useTranslation();
   return (
     <>
-      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">Display Mode</div>
+      <div className="px-3 py-2 text-xs font-semibold text-text-secondary uppercase">{t('mainLibrary.viewMode.title')}</div>
       <button
         className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center justify-between transition-colors duration-150 ${
           mode === LibraryViewMode.Flat
@@ -770,7 +785,7 @@ function ViewModeOptions({ mode, setMode }: { mode: LibraryViewMode; setMode: (m
         onClick={() => setMode(LibraryViewMode.Flat)}
         role="menuitem"
       >
-        <span>Current Folder</span>
+        <span>{t('mainLibrary.viewMode.currentFolder')}</span>
         {mode === LibraryViewMode.Flat && <Check size={16} />}
       </button>
       <button
@@ -782,7 +797,7 @@ function ViewModeOptions({ mode, setMode }: { mode: LibraryViewMode; setMode: (m
         onClick={() => setMode(LibraryViewMode.Recursive)}
         role="menuitem"
       >
-        <span>Recursive</span>
+        <span>{t('mainLibrary.viewMode.recursive')}</span>
         {mode === LibraryViewMode.Recursive && <Check size={16} />}
       </button>
     </>
@@ -802,6 +817,7 @@ function ViewOptionsDropdown({
   thumbnailSize,
   thumbnailAspectRatio,
 }: ViewOptionsProps) {
+  const { t } = useTranslation();
   const isFilterActive =
     filterCriteria.rating > 0 ||
     (filterCriteria.rawStatus && filterCriteria.rawStatus !== RawStatus.All) ||
@@ -815,7 +831,7 @@ function ViewOptionsDropdown({
           {isFilterActive && <div className="absolute -top-1 -right-1 bg-accent rounded-full w-3 h-3" />}
         </>
       }
-      buttonTitle="View Options"
+      buttonTitle={t('mainLibrary.viewOptions.title')}
       contentClassName="w-[720px]"
     >
       <div className="flex">

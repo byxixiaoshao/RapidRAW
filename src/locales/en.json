@@ -44,10 +44,150 @@
   "settings": {
     "title": "Settings",
     "language": "Language",
-    "theme": "Theme",
     "appearance": "Appearance",
     "behavior": "Behavior",
-    "advanced": "Advanced"
+    "advanced": "Advanced",
+    "tabs": {
+      "general": "General",
+      "processing": "Processing",
+      "shortcuts": "Shortcuts"
+    },
+    "theme": {
+      "label": "Theme",
+      "description": "Change the look and feel of the application."
+    },
+    "editorTheme": {
+      "label": "Editor Theme",
+      "description": "Dynamically changes editor colors based on the current image.",
+      "adaptive": "Adaptive Editor Theme"
+    },
+    "exif": {
+      "label": "EXIF Library Sorting",
+      "description": "Read EXIF data (ISO, aperture, etc.) on folder load at the cost of slower folder loading when using EXIF sorting."
+    },
+    "transparency": {
+      "label": "Transparency",
+      "description": "Enable window transparency effects.",
+      "toggle": "Toggle Transparency",
+      "confirm": "Confirm Window Transparency",
+      "enableMessage": "Are you sure you want to enable window transparency effects?\n\nThese effects may reduce application performance.\n\nThe application will relaunch to make this change.",
+      "disableMessage": "Are you sure you want to disable window transparency effects?\n\nThe application will relaunch to make this change."
+    },
+    "dataActions": {
+      "clearSidecars": "Delete All Edits",
+      "clearSidecarsTitle": "Confirm Deletion",
+      "clearSidecarsMessage": "Are you sure you want to delete all sidecar files?\n\nThis will permanently remove all your edits for all images inside the current base folder and its subfolders.",
+      "clearCache": "Clear Cache",
+      "clearCacheTitle": "Confirm Cache Deletion",
+      "clearCacheMessage": "Are you sure you want to clear the thumbnail cache?\n\nAll thumbnails will need to be regenerated, which may be slow for large folders.",
+      "clearAiTags": "Clear AI Tags",
+      "clearAiTagsTitle": "Confirm AI Tag Deletion",
+      "clearAiTagsMessage": "Are you sure you want to remove all AI-generated tags from all images in the current base folder?\n\nThis will not affect user-added tags. This action cannot be undone.",
+      "clearAllTags": "Clear All Tags",
+      "clearAllTagsTitle": "Confirm All Tag Deletion",
+      "clearAllTagsMessage": "Are you sure you want to remove all AI-generated and user-added tags from all images in the current base folder?\n\nThis action cannot be undone."
+    },
+    "processing": {
+      "previewResolution": "Editor Preview Resolution",
+      "previewResolutionDescription": "Adjust the resolution used for editor previews. Lower resolutions improve performance on slower machines.",
+      "highlightCompression": "RAW Highlight Compression",
+      "highlightCompressionDescription": "Adjust how aggressively highlights are compressed in RAW files.",
+      "backend": "Processing Backend",
+      "backendDescription": "Choose which graphics API to use for processing.",
+      "linuxOptimization": "Linux GPU Optimization",
+      "linuxOptimizationDescription": "Improves performance on Linux systems with certain GPUs.",
+      "restartRequired": "Restart Required",
+      "saveAndRestart": "Save & Restart"
+    },
+    "shortcuts": {
+      "tagging": "Tagging Shortcuts",
+      "taggingDescription": "Quickly apply these tags using keyboard shortcuts in the library.",
+      "addShortcut": "Add Shortcut",
+      "enterTag": "Enter tag..."
+    },
+    "ai": {
+      "provider": "AI Provider",
+      "providerDescription": "Choose how AI features are processed.",
+      "cpu": "CPU",
+      "aiConnector": "AI Connector",
+      "cloud": "Cloud",
+      "aiConnectorAddress": "AI Connector Address",
+      "aiConnectorAddressDescription": "Address of the AI Connector server (e.g., http://localhost:11434)",
+      "testConnection": "Test Connection",
+      "testing": "Testing...",
+      "connectionSuccess": "Connection successful!",
+      "connectionFailed": "Connection failed."
+    }
+  },
+  "community": {
+    "title": "Community Presets",
+    "description": "Discover presets created by the community.",
+    "searchPlaceholder": "Search presets...",
+    "sortBy": "Sort by:",
+    "sortByName": "Name (A-Z)",
+    "loading": "Fetching presets from GitHub...",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "featured": "Want to get your preset featured?",
+    "createIssue": "Create an issue on GitHub"
+  },
+  "mainLibrary": {
+    "search": {
+      "placeholder": "Search by tag or filename...",
+      "addTag": "Add another tag...",
+      "indexing": "Indexing Images...",
+      "indexingProgress": "Indexing... ({{current}}/{{total}})",
+      "separateTags": "Separate tags with {{comma}}",
+      "clear": "Clear search",
+      "title": "Search"
+    },
+    "filters": {
+      "colorLabel": "Filter by Color Label",
+      "noLabel": "No Label"
+    },
+    "thumbnail": {
+      "size": "Thumbnail Size",
+      "aspectRatio": "Thumbnail Aspect Ratio",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "fillSquare": "Fill Square",
+      "originalRatio": "Original Ratio"
+    },
+    "viewMode": {
+      "grid": "Grid",
+      "list": "List"
+    },
+    "sort": {
+      "by": "Sort by:",
+      "name": "Name",
+      "dateModified": "Date Modified",
+      "dateCreated": "Date Created",
+      "size": "Size",
+      "rating": "Rating"
+    },
+    "noResults": {
+      "title": "No Results Found",
+      "search": "Could not find an image based on filename or tags.",
+      "filter": "No images found that match your filter."
+    },
+    "folders": {
+      "home": "Home",
+      "openFolder": "Open Folder",
+      "refresh": "Refresh"
+    },
+    "settings": {
+      "title": "Settings",
+      "appearance": "Appearance"
+    },
+    "community": {
+      "title": "Community"
+    },
+    "indexing": {
+      "title": "Indexing Images",
+      "description": "Please wait while we index your images..."
+    }
   },
   "errors": {
     "failedToLoadImage": "Failed to load image",
