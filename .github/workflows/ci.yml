@@ -41,7 +41,7 @@ jobs:
     with:
       platform: ${{ matrix.platform }}
       target: ${{ matrix.target }}
-      build-args: ${{ matrix.args }}
+      build-args: ${{ matrix.builds-args }}
       asset-prefix: ${{ matrix.asset-prefix }}
     secrets: inherit
     permissions:
