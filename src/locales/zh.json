@@ -1,0 +1,59 @@
+{
+  "common": {
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "copy": "复制",
+    "paste": "粘贴",
+    "undo": "撤销",
+    "redo": "重做",
+    "cancel": "取消",
+    "ok": "确定"
+  },
+  "app": {
+    "title": "RapidRAW",
+    "library": "图库",
+    "editor": "编辑器",
+    "community": "社区"
+  },
+  "controls": {
+    "title": "调整",
+    "autoAdjustments": "自动调整",
+    "resetAll": "重置所有调整",
+    "copySettings": "复制{{section}}设置",
+    "pasteSettings": "粘贴{{section}}设置",
+    "resetSettings": "重置{{section}}设置"
+  },
+  "library": {
+    "folders": "文件夹",
+    "images": "图片",
+    "sortBy": "排序方式",
+    "filter": "筛选",
+    "search": "搜索",
+    "rating": "评分",
+    "tags": "标签"
+  },
+  "export": {
+    "title": "导出",
+    "format": "格式",
+    "quality": "质量",
+    "size": "尺寸",
+    "destination": "目标位置",
+    "export": "导出"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "theme": "主题",
+    "appearance": "外观",
+    "behavior": "行为",
+    "advanced": "高级"
+  },
+  "errors": {
+    "failedToLoadImage": "加载图片失败",
+    "failedToShowOriginal": "显示原始图片失败",
+    "aiReplaceFailed": "AI 替换失败",
+    "quickEraseFailed": "快速擦除失败",
+    "aiMaskFailed": "AI 蒙版失败"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "common": {
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "copy": "Copy",
+    "paste": "Paste",
+    "undo": "Undo",
+    "redo": "Redo",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "app": {
+    "title": "RapidRAW",
+    "library": "Library",
+    "editor": "Editor",
+    "community": "Community"
+  },
+  "controls": {
+    "title": "Adjustments",
+    "autoAdjustments": "Auto Adjustments",
+    "resetAll": "Reset All Adjustments",
+    "copySettings": "Copy {{section}} Settings",
+    "pasteSettings": "Paste {{section}} Settings",
+    "resetSettings": "Reset {{section}} Settings"
+  },
+  "library": {
+    "folders": "Folders",
+    "images": "Images",
+    "sortBy": "Sort By",
+    "filter": "Filter",
+    "search": "Search",
+    "rating": "Rating",
+    "tags": "Tags"
+  },
+  "export": {
+    "title": "Export",
+    "format": "Format",
+    "quality": "Quality",
+    "size": "Size",
+    "destination": "Destination",
+    "export": "Export"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "appearance": "Appearance",
+    "behavior": "Behavior",
+    "advanced": "Advanced"
+  },
+  "errors": {
+    "failedToLoadImage": "Failed to load image",
+    "failedToShowOriginal": "Failed to show original image",
+    "aiReplaceFailed": "AI Replace Failed",
+    "quickEraseFailed": "Quick Erase Failed",
+    "aiMaskFailed": "AI Mask Failed"
+  }
+}

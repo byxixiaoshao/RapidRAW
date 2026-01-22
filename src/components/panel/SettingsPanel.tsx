@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowLeft,
   Cloud,
@@ -229,6 +230,7 @@ export default function SettingsPanel({
   rootPath,
 }: SettingsPanelProps) {
   const { user } = useUser();
+  const { t, i18n } = useTranslation();
   const [isClearing, setIsClearing] = useState(false);
   const [clearMessage, setClearMessage] = useState('');
   const [isClearingCache, setIsClearingCache] = useState(false);
@@ -407,7 +409,7 @@ export default function SettingsPanel({
   };
 
   const shortcutTagVariants = {
-    visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 500, damping: 30 } },
+    visible: { opacity: 1, scale: 1, transition: { type: 'spring' as const, stiffness: 500, damping: 30 } },
     exit: { opacity: 0, scale: 0.8, transition: { duration: 0.15 } },
   };
 
@@ -516,7 +518,7 @@ export default function SettingsPanel({
             >
               <ArrowLeft />
             </Button>
-            <h1 className="text-3xl font-bold text-accent whitespace-nowrap">Settings</h1>
+            <h1 className="text-3xl font-bold text-accent whitespace-nowrap">{t('settings.title')}</h1>
           </div>
 
           <div className="relative flex w-full min-[1200px]:w-[450px] p-2 bg-surface rounded-md">
@@ -562,7 +564,7 @@ export default function SettingsPanel({
                 className="space-y-8"
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">General Settings</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.title')}</h2>
                   <div className="space-y-6">
                     <SettingItem label="Theme" description="Change the look and feel of the application.">
                       <Dropdown
@@ -605,6 +607,23 @@ export default function SettingsPanel({
                         id="window-effects-toggle"
                         label="Transparency"
                         onChange={handleSetTransparent}
+                      />
+                    </SettingItem>
+
+                    <SettingItem
+                      description="Change the application language."
+                      label={t('settings.language')}
+                    >
+                      <Dropdown
+                        onChange={(value: any) => {
+                          i18n.changeLanguage(value);
+                          onSettingsChange({ ...appSettings, language: value });
+                        }}
+                        options={[
+                          { value: 'en', label: 'English' },
+                          { value: 'zh', label: '中文' }
+                        ]}
+                        value={appSettings?.language || i18n.language}
                       />
                     </SettingItem>
                   </div>

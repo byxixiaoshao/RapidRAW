@@ -9,6 +9,12 @@ export default function TitleBar() {
   useEffect(() => {
     const getPlatform = async () => {
       try {
+        // 检查是否在浏览器环境中
+        if (typeof window !== 'undefined' && window.location && window.location.href.startsWith('http')) {
+          // 在浏览器环境中，默认使用 windows 平台
+          setOsPlatform('windows');
+          return;
+        }
         const p = platform();
         setOsPlatform(p);
       } catch (error) {
@@ -19,22 +25,41 @@ export default function TitleBar() {
     getPlatform();
   }, []);
 
-  const appWindow = getCurrentWindow();
-  const handleMinimize = () => appWindow.minimize();
-  const handleClose = () => appWindow.close();
+  const handleMinimize = () => {
+    try {
+      const appWindow = getCurrentWindow();
+      appWindow.minimize();
+    } catch (error) {
+      console.error('Failed to minimize window:', error);
+    }
+  };
+
+  const handleClose = () => {
+    try {
+      const appWindow = getCurrentWindow();
+      appWindow.close();
+    } catch (error) {
+      console.error('Failed to close window:', error);
+    }
+  };
 
   const handleMaximize = useCallback(async () => {
-    switch (osPlatform) {
-      case 'macos': {
-        const isFullscreen = await appWindow.isFullscreen();
-        appWindow.setFullscreen(!isFullscreen);
-        break;
+    try {
+      const appWindow = getCurrentWindow();
+      switch (osPlatform) {
+        case 'macos': {
+          const isFullscreen = await appWindow.isFullscreen();
+          appWindow.setFullscreen(!isFullscreen);
+          break;
+        }
+        default:
+          appWindow.toggleMaximize();
+          break;
       }
-      default:
-        appWindow.toggleMaximize();
-        break;
+    } catch (error) {
+      console.error('Failed to maximize window:', error);
     }
-  }, [osPlatform, appWindow]);
+  }, [osPlatform]);
 
   const isMac = osPlatform === 'macos';
   const isWindows = osPlatform === 'windows';

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import './i18n';
 import { motion, AnimatePresence } from 'framer-motion';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
@@ -584,7 +585,7 @@ function App() {
             jsAdjustments: adjustments,
           });
           if (isEffectActive) {
-            const blob = new Blob([imageData], { type: 'image/jpeg' });
+            const blob = new Blob([imageData as any], { type: 'image/jpeg' });
             objectUrl = URL.createObjectURL(blob);
             setTransformedOriginalUrl(objectUrl);
           }
@@ -612,15 +613,34 @@ function App() {
   }, [libraryViewMode]);
 
   useEffect(() => {
-    const unlisten = listen('ai-connector-status-update', (event: any) => {
-      setisAIConnectorConnected(event.payload.connected);
-    });
-    invoke(Invokes.CheckAIConnectorStatus);
-    const interval = setInterval(() => invoke(Invokes.CheckAIConnectorStatus), 10000);
-    return () => {
-      clearInterval(interval);
-      unlisten.then((f) => f());
+    let interval: number | undefined;
+
+    const checkAIStatus = () => {
+      try {
+        invoke(Invokes.CheckAIConnectorStatus);
+      } catch (error) {
+        console.error('Failed to check AI connector status:', error);
+      }
     };
+
+    try {
+      const unlisten = listen('ai-connector-status-update', (event: any) => {
+        setisAIConnectorConnected(event.payload.connected);
+      });
+
+      checkAIStatus();
+      interval = setInterval(checkAIStatus, 10000);
+
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+        unlisten.then((f) => f());
+      };
+    } catch (error) {
+      console.error('Failed to setup AI connector status listener:', error);
+      return () => {};
+    }
   }, []);
 
   const updateSubMask = (subMaskId: string, updatedData: any) => {
@@ -875,7 +895,7 @@ function App() {
         ?.flatMap((p: AiPatch) => p.subMasks)
         .find((sm: SubMask) => sm.id === subMaskId);
 
-      const mergedParameters = { ...(subMask?.parameters || {}), ...newParameters };
+      const mergedParameters = Object.assign({}, subMask?.parameters, newParameters);
       patchesSentToBackend.current.delete(subMaskId);
       updateSubMask(subMaskId, { parameters: mergedParameters });
     } catch (error) {
@@ -915,7 +935,7 @@ function App() {
         ?.flatMap((p: AiPatch) => p.subMasks)
         .find((sm: SubMask) => sm.id === subMaskId);
 
-      const mergedParameters = { ...(subMask?.parameters || {}), ...newParameters };
+      const mergedParameters = Object.assign({}, subMask?.parameters, newParameters);
       patchesSentToBackend.current.delete(subMaskId);
       updateSubMask(subMaskId, { parameters: mergedParameters });
     } catch (error) {
@@ -955,7 +975,7 @@ function App() {
         ?.flatMap((p: AiPatch) => p.subMasks)
         .find((sm: SubMask) => sm.id === subMaskId);
 
-      const mergedParameters = { ...(subMask?.parameters || {}), ...newParameters };
+      const mergedParameters = Object.assign({}, subMask?.parameters, newParameters);
       patchesSentToBackend.current.delete(subMaskId);
       updateSubMask(subMaskId, { parameters: mergedParameters });
     } catch (error) {
@@ -1286,16 +1306,29 @@ function App() {
   };
 
   useEffect(() => {
-    const appWindow = getCurrentWindow();
-    const checkFullscreen = async () => {
-      setIsWindowFullScreen(await appWindow.isFullscreen());
-    };
-    checkFullscreen();
+    let unlistenPromise: Promise<any> | undefined;
 
-    const unlistenPromise = appWindow.onResized(checkFullscreen);
+    const checkFullscreen = async () => {
+      try {
+        const appWindow = getCurrentWindow();
+        setIsWindowFullScreen(await appWindow.isFullscreen());
+      } catch (error) {
+        console.error('Failed to check fullscreen status:', error);
+      }
+    };
+
+    try {
+      checkFullscreen();
+      const appWindow = getCurrentWindow();
+      unlistenPromise = appWindow.onResized(checkFullscreen);
+    } catch (error) {
+      console.error('Failed to setup window resize listener:', error);
+    }
 
     return () => {
-      unlistenPromise.then((unlisten: any) => unlisten());
+      if (unlistenPromise) {
+        unlistenPromise.then((unlisten: any) => unlisten());
+      }
     };
   }, []);
 
@@ -1403,7 +1436,7 @@ function App() {
         if (settings?.pinnedFolders && settings.pinnedFolders.length > 0) {
           try {
             const trees = await invoke(Invokes.GetPinnedFolderTrees, { paths: settings.pinnedFolders });
-            setPinnedFolderTrees(trees);
+            setPinnedFolderTrees(trees as any[]);
           } catch (err) {
             console.error('Failed to load pinned folder trees:', err);
           }
@@ -1567,7 +1600,7 @@ function App() {
     if (currentPins.length > 0) {
       try {
         const trees = await invoke(Invokes.GetPinnedFolderTrees, { paths: currentPins });
-        setPinnedFolderTrees(trees);
+        setPinnedFolderTrees(trees as any[]);
       } catch (err) {
         console.error('Failed to refresh pinned folder trees:', err);
       }
@@ -1581,8 +1614,8 @@ function App() {
     const currentPins = appSettings.pinnedFolders || [];
     const isPinned = currentPins.includes(path);
     const newPins = isPinned
-      ? currentPins.filter(p => p !== path)
-      : [...currentPins, path].sort((a, b) => a.localeCompare(b));
+      ? currentPins.filter((p: string) => p !== path)
+      : [...currentPins, path].sort((a: string, b: string) => a.localeCompare(b));
 
     if (!isPinned && path === currentFolderPath) {
       handleActiveTreeSectionChange('pinned');
@@ -1592,7 +1625,7 @@ function App() {
 
     try {
       const trees = await invoke(Invokes.GetPinnedFolderTrees, { paths: newPins });
-      setPinnedFolderTrees(trees);
+      setPinnedFolderTrees(trees as any[]);
     } catch (err) {
       console.error('Failed to refresh pinned folders:', err);
     }
@@ -1616,7 +1649,7 @@ function App() {
         setCurrentFolderPath(path);
         setActiveView('library');
 
-        if (isNewRoot) {
+        if (isNewRoot && path) {
           setExpandedFolders(new Set([path]));
         } else if (path) {
           setExpandedFolders((prev) => {
@@ -2041,7 +2074,7 @@ function App() {
       setIsFullScreenLoading(true);
       try {
         const imageData: Uint8Array = await invoke(Invokes.GenerateFullscreenPreview, { jsAdjustments: adjustments });
-        const blob = new Blob([imageData], { type: 'image/jpeg' });
+        const blob = new Blob([imageData as any], { type: 'image/jpeg' });
         url = URL.createObjectURL(blob);
         setFullScreenUrl(url);
       } catch (e) {
@@ -2070,7 +2103,7 @@ function App() {
         return;
       }
 
-      const { mode, includedAdjustments } = appSettings.copyPasteSettings;
+      const { mode, includedAdjustments } = ((appSettings as any).copyPasteSettings || { mode: 'replace', includedAdjustments: [] });
 
       const adjustmentsToApply: Partial<Adjustments> = {};
 
@@ -2299,9 +2332,10 @@ function App() {
       invoke(Invokes.GenerateFullscreenPreview, {
         jsAdjustments: currentAdjustments,
       })
-        .then((imageData: Uint8Array) => {
+        .then((imageData: unknown) => {
+          const typedImageData = imageData as Uint8Array;
           if (!request.cancelled) {
-            const blob = new Blob([imageData], { type: 'image/jpeg' });
+            const blob = new Blob([imageData as any], { type: 'image/jpeg' });
             const url = URL.createObjectURL(blob);
             setFullResolutionUrl(url);
             fullResCacheKeyRef.current = key;
@@ -2795,6 +2829,7 @@ function App() {
           progress: { current: 0, total: event.payload, stage: 'Initializing...' },
           suggestions: null,
           error: null,
+          pathsToCull: [],
         });
       }
     });
@@ -2989,7 +3024,7 @@ function App() {
       setRootPath(root);
 
       if (folderState?.expandedFolders) {
-        const newExpandedFolders = new Set(folderState.expandedFolders);
+        const newExpandedFolders = new Set(folderState.expandedFolders as string[]);
         newExpandedFolders.add(root);
         setExpandedFolders(newExpandedFolders);
       } else {
@@ -3876,7 +3911,7 @@ function App() {
 
         const currentPins = appSettings?.pinnedFolders || [];
         if (currentPins.includes(oldPath)) {
-          const newPins = currentPins.map(p => (p === oldPath ? newPath : p)).sort((a, b) => a.localeCompare(b));
+          const newPins = currentPins.map((p: string) => (p === oldPath ? newPath : p)).sort((a: string, b: string) => a.localeCompare(b));
           newAppSettings.pinnedFolders = newPins;
           settingsChanged = true;
         }
@@ -4270,9 +4305,9 @@ function App() {
               waveform={waveform}
               onDisplaySizeChange={handleDisplaySizeChange}
               onInitialFitScale={setInitialFitScale}
-              onZoomChange={handleZoomChange}
+
               originalSize={originalSize}
-              baseRenderSize={baseRenderSize}
+
               isFullResolution={isFullResolution}
               fullResolutionUrl={fullResolutionUrl}
               isLoadingFullRes={isLoadingFullRes}
@@ -4509,7 +4544,7 @@ function App() {
       <CopyPasteSettingsModal
         isOpen={isCopyPasteSettingsModalOpen}
         onClose={() => setIsCopyPasteSettingsModalOpen(false)}
-        settings={appSettings?.copyPasteSettings as CopyPasteSettings}
+        settings={((appSettings as any)?.copyPasteSettings || { mode: 'replace', includedAdjustments: [] }) as CopyPasteSettings}
         onSave={(newSettings) => handleSettingsChange({ ...appSettings, copyPasteSettings: newSettings } as AppSettings)}
       />
       <PanoramaModal

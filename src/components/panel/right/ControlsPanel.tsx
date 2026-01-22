@@ -1,4 +1,5 @@
 import { RotateCcw, Copy, ClipboardPaste, Aperture } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import BasicAdjustments from '../../adjustments/Basic';
 import CurveGraph from '../../adjustments/Curves';
 import ColorPanel from '../../adjustments/Color';
@@ -54,6 +55,7 @@ export default function Controls({
   onDragStateChange,
 }: ControlsProps) {
   const { showContextMenu } = useContextMenu();
+  const { t } = useTranslation();
 
   const handleToggleVisibility = (sectionName: string) => {
     setAdjustments((prev: Adjustments) => {
@@ -134,26 +136,25 @@ export default function Controls({
     };
 
     const isPasteAllowed = copiedSectionAdjustments && copiedSectionAdjustments.section === sectionName;
-    const pasteLabel = copiedSectionAdjustments
-      ? `Paste ${
-          copiedSectionAdjustments.section.charAt(0).toUpperCase() + copiedSectionAdjustments.section.slice(1)
-        } Settings`
-      : 'Paste Settings';
+    const sectionTitle = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+      const pasteLabel = copiedSectionAdjustments
+        ? t('controls.pasteSettings', { section: sectionTitle })
+        : t('controls.pasteSettings', { section: '' });
 
-    const options: Array<ControlsPanelOption> = [
-      {
-        label: `Copy ${sectionName.charAt(0).toUpperCase() + sectionName.slice(1)} Settings`,
-        icon: Copy,
-        onClick: handleCopy,
-      },
-      { label: pasteLabel, icon: ClipboardPaste, onClick: handlePaste, disabled: !isPasteAllowed },
-      { type: OPTION_SEPARATOR },
-      {
-        label: `Reset ${sectionName.charAt(0).toUpperCase() + sectionName.slice(1)} Settings`,
-        icon: RotateCcw,
-        onClick: handleReset,
-      },
-    ];
+      const options: Array<ControlsPanelOption> = [
+        {
+          label: t('controls.copySettings', { section: sectionTitle }),
+          icon: Copy,
+          onClick: handleCopy,
+        },
+        { label: pasteLabel, icon: ClipboardPaste, onClick: handlePaste, disabled: !isPasteAllowed },
+        { type: OPTION_SEPARATOR },
+        {
+          label: t('controls.resetSettings', { section: sectionTitle }),
+          icon: RotateCcw,
+          onClick: handleReset,
+        },
+      ];
 
     showContextMenu(event.clientX, event.clientY, options);
   };
@@ -161,13 +162,13 @@ export default function Controls({
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface">
-        <h2 className="text-xl font-bold text-primary text-shadow-shiny">Adjustments</h2>
+        <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('controls.title')}</h2>
         <div className="flex items-center gap-1">
           <button
             className="p-2 rounded-full hover:bg-surface disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             disabled={!selectedImage}
             onClick={handleAutoAdjustments}
-            title="Auto Adjustments"
+            title={t('controls.autoAdjustments')}
           >
             <Aperture size={18} />
           </button>
@@ -175,7 +176,7 @@ export default function Controls({
             className="p-2 rounded-full hover:bg-surface disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             disabled={!selectedImage}
             onClick={handleResetAdjustments}
-            title="Reset All Adjustments"
+            title={t('controls.resetAll')}
           >
             <RotateCcw size={18} />
           </button>
