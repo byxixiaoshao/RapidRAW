@@ -105,18 +105,7 @@
         "connectionFailed": "连接失败。"
       }
     },
-    "shortcuts": {
-      "title": "快捷键",
-      "global": "全局",
-      "library": "图库",
-      "editor": "编辑器",
-      "tagging": "标签"
-    },
-    "categories": {
-      "general": "通用",
-      "processing": "处理",
-      "shortcuts": "快捷键"
-    },
+
     "labels": {
       "theme": "主题",
       "editorTheme": "编辑器主题",
@@ -229,7 +218,7 @@
         "不需要强大的硬件"
       ]
     },
-    "shortcuts": {
+    "keyboardShortcuts": {
       "title": "键盘快捷键",
       "general": "通用",
       "editor": "编辑器",
