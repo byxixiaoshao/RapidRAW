@@ -48,11 +48,6 @@
     "appearance": "外观",
     "behavior": "行为",
     "advanced": "高级",
-    "categories": {
-      "general": "通用",
-      "processing": "处理",
-      "shortcuts": "快捷键"
-    },
     "general": {
       "theme": "主题",
       "editorTheme": "编辑器主题",
@@ -93,11 +88,6 @@
       "changesRequireRestart": "处理引擎的更改需要应用程序重启才能生效。",
       "saveAndRelaunch": "保存并重启",
       "generativeAi": "生成式 AI",
-      "aiProviders": {
-        "cpu": "内置 AI (CPU)",
-        "aiConnector": "自托管 (RapidRAW AI Connector)",
-        "cloud": "云服务"
-      },
       "aiConnector": {
         "address": "AI Connector 地址",
         "testConnection": "测试连接",
@@ -105,7 +95,6 @@
         "connectionFailed": "连接失败。"
       }
     },
-
     "labels": {
       "theme": "主题",
       "editorTheme": "编辑器主题",
@@ -165,33 +154,6 @@
       "aiTagging": "使用 AI (CLIP) 模型启用自动图像标记。这将下载额外的模型，并在浏览文件夹时影响性能。标签用于搜索文件夹。",
       "taggingShortcuts": "将在标记上下文菜单中显示为快捷方式的标签列表。"
     },
-    "aiProviders": {
-      "cpu": "内置 AI (CPU)",
-      "aiConnector": "自托管 (RapidRAW AI Connector)",
-      "cloud": "云服务"
-    },
-    "aiDescriptions": {
-      "cpu": "直接集成到 RapidRAW 中，这些功能完全在您的计算机上运行。它们速度快、免费且无需设置，非常适合日常工作流程加速。",
-      "aiConnector": "对于拥有强大 GPU 并希望获得最大控制权的用户，将 RapidRAW 连接到您自己的本地 AI Connector 服务器。这为技术工作流程提供了完全的控制权。",
-      "cloud": "对于需要最高质量生成结果的用户，使用云服务。这需要订阅，但提供最先进的 AI 模型。"
-    },
-    "aiFeatures": {
-      "cpu": [
-        "AI 遮罩（主体、天空、前景）",
-        "自动图像标记",
-        "基于 CPU 的简单生成式替换"
-      ],
-      "aiConnector": [
-        "使用您自己的 ComfyUI 实例",
-        "免费的高级生成式编辑",
-        "自定义工作流程选择"
-      ],
-      "cloud": [
-        "最先进的生成式 AI 模型",
-        "高质量结果",
-        "无需本地 GPU 资源"
-      ]
-    },
     "dataManagement": {
       "title": "数据管理",
       "clearSidecars": "清除所有编辑",
@@ -224,31 +186,36 @@
       "editor": "编辑器",
       "library": "图库",
       "tagging": "标签",
+      "categories": {
+        "general": "通用",
+        "processing": "处理",
+        "shortcuts": "快捷键"
+      },
       "generalShortcuts": [
         { "keys": ["Space", "Enter"], "description": "打开选定的图像" },
-        { "keys": ["Ctrl/Cmd", "+", "C"], "description": "复制选定的调整" },
-        { "keys": ["Ctrl/Cmd", "+", "V"], "description": "粘贴复制的调整" },
-        { "keys": ["Ctrl/Cmd", "+", "Shift", "+", "C"], "description": "复制选定的文件" },
-        { "keys": ["Ctrl/Cmd", "+", "Shift", "+", "V"], "description": "将文件粘贴到当前文件夹" },
-        { "keys": ["Ctrl/Cmd", "+", "A"], "description": "选择所有图像" },
+        { "keys": ["Ctrl/Cmd", "C"], "description": "复制选定的调整" },
+        { "keys": ["Ctrl/Cmd", "V"], "description": "粘贴复制的调整" },
+        { "keys": ["Ctrl/Cmd", "Shift", "C"], "description": "复制选定的文件" },
+        { "keys": ["Ctrl/Cmd", "Shift", "V"], "description": "将文件粘贴到当前文件夹" },
+        { "keys": ["Ctrl/Cmd", "A"], "description": "选择所有图像" },
         { "keys": ["Delete"], "description": "删除选定的文件" },
         { "keys": ["0-5"], "description": "为选定的图像设置星级" },
-        { "keys": ["Shift", "+", "0-5"], "description": "为选定的图像设置颜色标签" },
+        { "keys": ["Shift", "0-5"], "description": "为选定的图像设置颜色标签" },
         { "keys": ["↑", "↓", "←", "→"], "description": "在图库中导航图像" }
       ],
       "editorShortcuts": [
         { "keys": ["Esc"], "description": "取消选择蒙版，退出裁剪/全屏/编辑器" },
-        { "keys": ["Ctrl/Cmd", "+", "Z"], "description": "撤销调整" },
-        { "keys": ["Ctrl/Cmd", "+", "Y"], "description": "重做调整" },
+        { "keys": ["Ctrl/Cmd", "Z"], "description": "撤销调整" },
+        { "keys": ["Ctrl/Cmd", "Y"], "description": "重做调整" },
         { "keys": ["Delete"], "description": "删除选定的蒙版/补丁或图像" },
         { "keys": ["Space"], "description": "循环缩放（适应，2x 适应，100%）" },
         { "keys": ["←", "→"], "description": "上一个 / 下一个图像" },
         { "keys": ["↑", "↓"], "description": "放大 / 缩小（按步骤）" },
-        { "keys": ["Shift", "+", "Mouse Wheel"], "description": "将滑块值调整 2 步" },
-        { "keys": ["Ctrl/Cmd", "+", "+", ""], "description": "放大" },
-        { "keys": ["Ctrl/Cmd", "+", "-"], "description": "缩小" },
-        { "keys": ["Ctrl/Cmd", "+", "0"], "description": "缩放到适应" },
-        { "keys": ["Ctrl/Cmd", "+", "1"], "description": "缩放到 100%" },
+        { "keys": ["Shift", "Mouse Wheel"], "description": "将滑块值调整 2 步" },
+        { "keys": ["Ctrl/Cmd", "+"], "description": "放大" },
+        { "keys": ["Ctrl/Cmd", "-"], "description": "缩小" },
+        { "keys": ["Ctrl/Cmd", "0"], "description": "缩放到适应" },
+        { "keys": ["Ctrl/Cmd", "1"], "description": "缩放到 100%" },
         { "keys": ["F"], "description": "切换全屏" },
         { "keys": ["B"], "description": "显示原始图像（前后对比）" },
         { "keys": ["D"], "description": "切换调整面板" },
@@ -259,6 +226,33 @@
         { "keys": ["I"], "description": "切换元数据面板" },
         { "keys": ["W"], "description": "切换波形显示" },
         { "keys": ["E"], "description": "切换导出面板" }
+      ]
+    },
+    "aiProviders": {
+      "cpu": "内置 AI (CPU)",
+      "aiConnector": "自托管 (RapidRAW AI Connector)",
+      "cloud": "云服务"
+    },
+    "aiDescriptions": {
+      "cpu": "直接集成到 RapidRAW 中，这些功能完全在您的计算机上运行。它们速度快、免费且无需设置，非常适合日常工作流程加速。",
+      "aiConnector": "对于拥有强大 GPU 并希望获得最大控制权的用户，将 RapidRAW 连接到您自己的本地 AI Connector 服务器。这为技术工作流程提供了完全的控制权。",
+      "cloud": "对于需要最高质量生成结果的用户，使用云服务。这需要订阅，但提供最先进的 AI 模型。"
+    },
+    "aiFeatures": {
+      "cpu": [
+        "AI 遮罩（主体、天空、前景）",
+        "自动图像标记",
+        "基于 CPU 的简单生成式替换"
+      ],
+      "aiConnector": [
+        "使用您自己的 ComfyUI 实例",
+        "免费的高级生成式编辑",
+        "自定义工作流程选择"
+      ],
+      "cloud": [
+        "最先进的生成式 AI 模型",
+        "高质量结果",
+        "无需本地 GPU 资源"
       ]
     },
     "buttons": {
