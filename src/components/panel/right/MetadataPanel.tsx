@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { SelectedImage } from '../../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
 
 interface CameraSetting {
   format?(value: number): void;
@@ -65,22 +66,22 @@ function MetadataItem({ label, value }: MetaDataItemProps) {
 const KEY_CAMERA_SETTINGS_MAP: CameraSettings = {
   FNumber: {
     format: (value: number) => `${value}`,
-    label: 'Aperature',
+    label: 'aperture',
   },
   ExposureTime: {
     format: (value: number) => `${value}`,
-    label: 'Shutter Speed',
+    label: 'shutterSpeed',
   },
   PhotographicSensitivity: {
-    label: 'ISO',
+    label: 'iso',
   },
   FocalLengthIn35mmFilm: {
     format: (value: number) => (String(value).endsWith('mm') ? value : `${value} mm`),
-    label: 'Focal Length',
+    label: 'focalLength',
   },
   LensModel: {
     format: (value: number) => String(value).replace(/"/g, ''),
-    label: 'Lens',
+    label: 'lens',
   },
 };
 
@@ -93,22 +94,23 @@ const KEY_SETTINGS_ORDER: Array<string> = [
 ];
 
 export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
+  const { t } = useTranslation();
   const { keyCameraSettings, gpsData, otherExifEntries } = useMemo(() => {
     const exif = selectedImage?.exif || {};
 
     const keyCameraSettings = KEY_SETTINGS_ORDER.map((key) => {
-      const value = exif[key];
-      if (value === undefined || value === null) {
-        return null;
-      }
-      const config = KEY_CAMERA_SETTINGS_MAP[key];
-      const formattedValue = config.format ? config.format(value) : value;
-      return {
-        key: key,
-        label: config.label,
-        value: formattedValue,
-      };
-    }).filter(Boolean);
+        const value = exif[key];
+        if (value === undefined || value === null) {
+          return null;
+        }
+        const config = KEY_CAMERA_SETTINGS_MAP[key];
+        const formattedValue = config.format ? config.format(value) : value;
+        return {
+          key: key,
+          label: t(`metadata.${config.label}`),
+          value: formattedValue,
+        };
+      }).filter(Boolean);
 
     const latStr = exif.GPSLatitude;
     const latRef = exif.GPSLatitudeRef;
@@ -135,20 +137,20 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface">
-        <h2 className="text-xl font-bold text-primary text-shadow-shiny">Metadata</h2>
+        <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('metadata.title')}</h2>
       </div>
       <div className="flex-grow overflow-y-auto p-4 text-text-secondary">
         {selectedImage ? (
           <div className="flex flex-col gap-6">
             <div>
               <h3 className="text-base font-bold text-text-primary mb-2 border-b border-surface pb-1">
-                File Properties
+                {t('metadata.fileProperties')}
               </h3>
               <div className="flex flex-col gap-1">
-                <MetadataItem label="Filename" value={selectedImage.path.split(/[\\/]/).pop()} />
-                <MetadataItem label="Dimensions" value={`${selectedImage.width} x ${selectedImage.height}`} />
+                <MetadataItem label={t('metadata.filename')} value={selectedImage.path.split(/[\\/]/).pop()} />
+                <MetadataItem label={t('metadata.dimensions')} value={`${selectedImage.width} x ${selectedImage.height}`} />
                 {selectedImage.exif?.DateTimeOriginal && (
-                  <MetadataItem label="Capture Date" value={selectedImage.exif.DateTimeOriginal} />
+                  <MetadataItem label={t('metadata.captureDate')} value={selectedImage.exif.DateTimeOriginal} />
                 )}
               </div>
             </div>
@@ -156,7 +158,7 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
             {keyCameraSettings.length > 0 && (
               <div>
                 <h3 className="text-base font-bold text-text-primary mb-2 border-b border-surface pb-1">
-                  Key Camera Settings
+                  {t('metadata.keyCameraSettings')}
                 </h3>
                 <div className="flex flex-col gap-1">
                   {keyCameraSettings.map((item: any) => (
@@ -169,7 +171,7 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
             {hasGps && gpsData?.lat && gpsData?.lon && (
               <div>
                 <h3 className="text-base font-bold text-text-primary mb-2 border-b border-surface pb-1">
-                  GPS Location
+                  {t('metadata.gpsLocation')}
                 </h3>
                 <div className="flex flex-col gap-2">
                   <div className="relative rounded-md overflow-hidden border border-surface">
@@ -193,13 +195,13 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
                       href={`https://www.openstreetmap.org/?mlat=${gpsData.lat}&mlon=${gpsData.lon}#map=15/${gpsData.lat}/${gpsData.lon}`}
                       rel="noopener noreferrer"
                       target="_blank"
-                      title="Click to open map in a new tab"
+                      title={t('metadata.openMapInNewTab')}
                     ></a>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <MetadataItem label="Latitude" value={gpsData.lat?.toFixed(6)} />
-                    <MetadataItem label="Longitude" value={gpsData.lon?.toFixed(6)} />
-                    {gpsData.altitude && <MetadataItem label="Altitude" value={gpsData.altitude} />}
+                    <MetadataItem label={t('metadata.latitude')} value={gpsData.lat?.toFixed(6)} />
+                    <MetadataItem label={t('metadata.longitude')} value={gpsData.lon?.toFixed(6)} />
+                    {gpsData.altitude && <MetadataItem label={t('metadata.altitude')} value={gpsData.altitude} />}
                   </div>
                 </div>
               </div>
@@ -208,7 +210,7 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
             {otherExifEntries.length > 0 && (
               <div>
                 <h3 className="text-base font-bold text-text-primary mb-2 border-b border-surface pb-1">
-                  All EXIF Data
+                  {t('metadata.allExifData')}
                 </h3>
                 <div className="flex flex-col gap-1">
                   {otherExifEntries.map(([tag, value]) => (
@@ -219,11 +221,11 @@ export default function MetadataPanel({ selectedImage }: MetaDataPanelProps) {
             )}
 
             {Object.keys(selectedImage.exif || {}).length === 0 && (
-              <p className="text-xs text-center text-text-secondary mt-4">No EXIF data found in this file.</p>
+              <p className="text-xs text-center text-text-secondary mt-4">{t('metadata.noExifData')}</p>
             )}
           </div>
         ) : (
-          <p className="text-center">No image selected.</p>
+          <p className="text-center">{t('metadata.noImageSelected')}</p>
         )}
       </div>
     </div>

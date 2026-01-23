@@ -35,6 +35,7 @@ import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 
 import { useContextMenu } from '../../../context/ContextMenuContext';
+import { useTranslation } from 'react-i18next';
 import {
   Mask,
   MaskType,
@@ -132,11 +133,13 @@ const SUB_MASK_CONFIG: any = {
   },
 };
 
-const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsChange: any }) => (
+const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsChange: any }) => {
+  const { t } = useTranslation();
+  return (
   <div className="space-y-4 pt-4 border-t border-surface mt-4">
     <Slider
       defaultValue={100}
-      label="Brush Size"
+      label={t('aiPanel.brushSize')}
       max={200}
       min={1}
       onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
@@ -145,7 +148,7 @@ const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsC
     />
     <Slider
       defaultValue={50}
-      label="Brush Feather"
+      label={t('aiPanel.brushFeather')}
       max={100}
       min={0}
       onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
@@ -161,7 +164,7 @@ const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsC
         }`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Brush }))}
       >
-        Add
+        {t('aiPanel.add')}
       </button>
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
@@ -171,20 +174,22 @@ const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsC
         }`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Eraser }))}
       >
-        Erase
+        {t('aiPanel.erase')}
       </button>
     </div>
   </div>
 );
+};
 
 const ConnectionStatus = ({ isConnected }: ConnectionStatusProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { t } = useTranslation();
   if (isConnected) {
     return (
       <div className="flex items-center gap-2 px-4 py-2 bg-surface rounded-lg mb-4">
         <div className={'w-2.5 h-2.5 rounded-full bg-green-500'} />
-        <span className="text-sm font-medium text-text-secondary">AI Connector:</span>
-        <span className={'text-sm font-bold text-green-400'}>Ready</span>
+        <span className="text-sm font-medium text-text-secondary">{t('aiPanel.aiConnector')}</span>
+        <span className={'text-sm font-bold text-green-400'}>{t('aiPanel.ready')}</span>
       </div>
     );
   }
@@ -196,8 +201,8 @@ const ConnectionStatus = ({ isConnected }: ConnectionStatusProps) => {
     >
       <div className="flex items-center gap-2 px-4 pt-2">
         <div className={'w-2.5 h-2.5 rounded-full bg-red-500'} />
-        <span className="text-sm font-medium text-text-secondary">AI Connector:</span>
-        <span className={'text-sm font-bold text-red-400'}>Not Detected</span>
+        <span className="text-sm font-medium text-text-secondary">{t('aiPanel.aiConnector')}</span>
+        <span className={'text-sm font-bold text-red-400'}>{t('aiPanel.notDetected')}</span>
       </div>
       <div className="px-4 pb-2">
         <motion.div
@@ -207,7 +212,7 @@ const ConnectionStatus = ({ isConnected }: ConnectionStatusProps) => {
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
           <p className="text-xs text-text-secondary">
-            Only simple inpainting available. Connect backend for generative features.
+            {t('aiPanel.connectorTooltip')}
           </p>
         </motion.div>
       </div>
@@ -254,6 +259,7 @@ export default function AIPanel({
   const { showContextMenu } = useContextMenu();
   const { setNodeRef: setRootDroppableRef, isOver: isRootOver } = useDroppable({ id: 'ai-list-root' });
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+  const { t } = useTranslation();
   
   const activeContainer = (adjustments.aiPatches || []).find((p) => p.id === activePatchContainerId);
   const activeSubMaskData = activeContainer?.subMasks.find((sm) => sm.id === activeSubMaskId);
@@ -614,7 +620,7 @@ export default function AIPanel({
             className="p-2 rounded-full hover:bg-surface transition-colors"
             disabled={!adjustments.aiPatches?.length || isGeneratingAi}
             onClick={handleResetAllAiEdits}
-            title="Reset All AI Edits"
+            title={t('aiPanel.resetAllAiEdits')}
           >
             <RotateCcw size={18} />
           </button>
@@ -622,13 +628,13 @@ export default function AIPanel({
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col min-h-0">
           <div className="p-4 pb-2 z-10 flex-shrink-0">
-            {!selectedImage && <p className="text-center text-text-tertiary mt-4">No image selected.</p>}
+            {!selectedImage && <p className="text-center text-text-tertiary mt-4">{t('aiPanel.noImageSelected')}</p>}
 
             {selectedImage && (
               <>
                 <ConnectionStatus isConnected={isAIConnectorConnected} />
                 <p className="text-sm mb-3 font-semibold text-text-primary">
-                  {activePatchContainerId ? 'Add to Selection' : t('aiTools.createNewGenerativeEdit')}
+                  {activePatchContainerId ? t('aiPanel.addToSelection') : t('aiTools.createNewGenerativeEdit')}
                 </p>
                 <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                   {AI_PANEL_CREATION_TYPES.map((maskType: MaskType) => {
@@ -667,11 +673,11 @@ export default function AIPanel({
                 transition={{ duration: 0.2 }}
                 className={`flex flex-col px-4 pb-2 space-y-1 transition-colors ${isRootOver ? 'bg-surface' : ''}`}
               >
-                <p className="text-sm my-3 font-semibold text-text-primary">Edits</p>
+                <p className="text-sm my-3 font-semibold text-text-primary">{t('aiPanel.edits')}</p>
 
                 {isPatchListEmpty && (adjustments.aiPatches || []).length === 0 && (
                   <div className="text-center text-text-secondary text-sm py-4 opacity-70">
-                    No generative edits created.
+                    {t('aiPanel.noGenerativeEditsCreated')}
                   </div>
                 )}
 
@@ -808,6 +814,7 @@ export default function AIPanel({
 }
 
 function NewMaskDropZone({ isOver }: { isOver: boolean }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       layout
@@ -817,7 +824,7 @@ function NewMaskDropZone({ isOver }: { isOver: boolean }) {
       transition={{ duration: 0.2, ease: 'easeOut' }}
       className={`p-4 rounded-lg text-center`}
     >
-      <p className="text-sm font-medium text-text-secondary">Drop here to create a new edit</p>
+      <p className="text-sm font-medium text-text-secondary">{t('aiPanel.dropToCreateNewEdit')}</p>
     </motion.div>
   );
 }
@@ -850,7 +857,7 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
       className={`bg-surface text-text-primary rounded-lg p-2 flex flex-col items-center justify-center gap-1.5 aspect-square transition-colors 
               ${maskType.disabled || isGenerating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-card-active active:bg-accent/20'} 
               ${isDragging ? 'opacity-50' : ''}`}
-      title={maskType.disabled ? 'Coming Soon' : `Add ${getTranslatedName()}`}
+      title={maskType.disabled ? t('aiPanel.comingSoon') : `${t('aiPanel.add')} ${getTranslatedName()}`}
     >
       <maskType.icon size={24} /> <span className="text-xs">{getTranslatedName()}</span>
     </button>
@@ -882,6 +889,7 @@ function ContainerRow({
     id: container.id,
     data: { type: 'Container', item: container },
   });
+  const { t } = useTranslation();
   const {
     attributes,
     listeners,
@@ -912,7 +920,7 @@ function ContainerRow({
     e.stopPropagation();
     showContextMenu(e.clientX, e.clientY, [
       {
-        label: 'Rename',
+        label: t('aiPanel.rename'),
         icon: FileEdit,
         onClick: () => {
           setRenamingId(container.id);
@@ -920,11 +928,11 @@ function ContainerRow({
         },
       },
       {
-        label: 'Reset Selection',
+        label: t('aiPanel.resetSelection'),
         icon: RotateCcw,
         onClick: () => updateContainer(container.id, { subMasks: [] }),
       },
-      { label: 'Delete Edit', icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
+      { label: t('aiPanel.deleteEdit'), icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
     ]);
   };
 
@@ -1060,15 +1068,15 @@ function ContainerRow({
               ))}
             </AnimatePresence>
             {isSubMaskListEmpty && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="p-3 text-xs text-text-secondary text-center italic"
-              >
-                No selection components.
-              </motion.div>
-            )}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="p-3 text-xs text-text-secondary text-center italic"
+                >
+                  {t('aiPanel.noSelectionComponents')}
+                </motion.div>
+              )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -1093,6 +1101,7 @@ function SubMaskRow({
     id: subMask.id,
     data: { type: 'SubMask', item: subMask, parentId: containerId },
   });
+  const { t } = useTranslation();
   const { setNodeRef: setDroppableRef, isOver } = useDroppable({
     id: subMask.id,
     data: { type: 'SubMask', item: subMask, parentId: containerId },
@@ -1201,7 +1210,7 @@ function SubMaskRow({
       <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           className="p-1 hover:bg-bg-primary rounded text-text-secondary"
-          title={subMask.mode === SubMaskMode.Additive ? 'Add' : 'Subtract'}
+          title={subMask.mode === SubMaskMode.Additive ? t('aiPanel.add') : t('aiPanel.subtract')}
           onClick={(e) => {
             e.stopPropagation();
             updateSubMask(subMask.id, {
@@ -1242,6 +1251,7 @@ function SettingsPanel({
 }: any) {
   const isActive = !!container;
   const isComponentMode = !!activeSubMask;
+  const { t } = useTranslation();
 
   const displayContainer = container || PLACEHOLDER_PATCH;
 
@@ -1283,7 +1293,7 @@ function SettingsPanel({
       onClick={(e) => e.stopPropagation()}
     >
       <CollapsibleSection
-        title="Generative Replace"
+        title={t('aiPanel.generativeReplace')}
         isOpen={collapsibleState.generative}
         onToggle={() => handleToggleSection('generative')}
         canToggleVisibility={false}
@@ -1292,23 +1302,23 @@ function SettingsPanel({
         <div className="space-y-3 pt-2">
           <p className="text-xs text-text-secondary">
             {isQuickErasePatch
-              ? 'Fill selection to remove the object.'
+              ? t('aiPanel.fillSelectionRemoveObject')
               : useFastInpaint
-              ? 'Fill selection based on surrounding pixels.'
-              : 'Describe what you want to generate in the selected area.'}
+              ? t('aiPanel.fillSelectionBasedOnSurrounding')
+              : t('aiPanel.describeWhatYouWantToGenerate')}
           </p>
 
           <Switch
             checked={useFastInpaint}
             disabled={isQuickErasePatch || !isAIConnectorConnected}
-            label="Use fast inpainting"
+            label={t('aiPanel.useFastInpainting')}
             onChange={setUseFastInpaint}
             tooltip={
               isQuickErasePatch
-                ? 'Quick Erase always uses fast inpainting.'
+                ? t('aiPanel.quickEraseAlwaysUsesFastInpainting')
                 : !isAIConnectorConnected
-                ? 'AI Connector not connected, fast inpainting is required.'
-                : 'Fast inpainting is quicker but not generative. Uncheck to use AI Connector with a text prompt.'
+                ? t('aiPanel.aiConnectorNotConnectedFastInpaintingRequired')
+                : t('aiPanel.fastInpaintingIsQuickerButNotGenerative')
             }
           />
 

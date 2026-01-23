@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FILENAME_VARIABLES } from '../ui/ExportImportProperties';
 
 interface RenameFileModalProps {
@@ -9,6 +10,7 @@ interface RenameFileModalProps {
 }
 
 export default function RenameFileModal({ filesToRename, isOpen, onClose, onSave }: RenameFileModalProps) {
+  const { t } = useTranslation();
   const [nameTemplate, setNameTemplate] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
@@ -102,13 +104,13 @@ export default function RenameFileModal({ filesToRename, isOpen, onClose, onSave
         onKeyDown={handleKeyDown}
       >
         <h3 className="text-lg font-semibold text-text-primary mb-6">
-          {isSingleFile ? 'Rename Image' : `Rename ${fileCount} Images`}
+          {isSingleFile ? t('renameFileModal.singleTitle') : t('renameFileModal.multipleTitle', { count: fileCount })}
         </h3>
 
         <div className="space-y-6 text-sm">
           <div>
             <label className="font-semibold text-text-primary block mb-2">
-              {isSingleFile ? 'New Name' : 'File Naming Template'}
+              {isSingleFile ? t('renameFileModal.newNameLabel') : t('renameFileModal.templateLabel')}
             </label>
             <input
               autoFocus
@@ -139,14 +141,14 @@ export default function RenameFileModal({ filesToRename, isOpen, onClose, onSave
             className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('renameFileModal.cancel')}
           </button>
           <button
             className="px-4 py-2 rounded-md bg-accent shadow-shiny text-button-text font-semibold hover:bg-accent-hover disabled:bg-gray-500 disabled:text-white disabled:cursor-not-allowed transition-colors"
             disabled={!nameTemplate.trim()}
             onClick={handleSave}
           >
-            Save
+            {t('renameFileModal.save')}
           </button>
         </div>
       </div>

@@ -45,6 +45,21 @@ const PRESETS: Array<CropPreset> = [
   { name: '65:24', value: 65 / 24 },
 ];
 
+const getPresetName = (name: string, t: any) => {
+  const presetNames = {
+    Free: t('crop.presets.free'),
+    Original: t('crop.presets.original'),
+    '1:1': t('crop.presets.1x1'),
+    '5:4': t('crop.presets.5x4'),
+    '4:3': t('crop.presets.4x3'),
+    '3:2': t('crop.presets.3x2'),
+    '16:9': t('crop.presets.16x9'),
+    '21:9': t('crop.presets.21x9'),
+    '65:24': t('crop.presets.65x24'),
+  };
+  return presetNames[name as keyof typeof presetNames] || name;
+};
+
 export default function CropPanel({
   adjustments,
   isStraightenActive,
@@ -292,7 +307,7 @@ export default function CropPanel({
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface">
         <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('crop.title')}</h2>
-        <button className="p-2 rounded-full hover:bg-surface transition-colors" onClick={handleReset} title="Reset All">
+        <button className="p-2 rounded-full hover:bg-surface transition-colors" onClick={handleReset} title={t('crop.resetAll')}>
           <RotateCcw size={18} />
         </button>
       </div>
@@ -307,7 +322,7 @@ export default function CropPanel({
                   className="p-1.5 rounded-md hover:bg-surface disabled:text-text-tertiary disabled:cursor-not-allowed"
                   disabled={isOrientationToggleDisabled}
                   onClick={handleOrientationToggle}
-                  title="Switch Orientation"
+                  title={t('crop.switchOrientation')}
                 >
                   {orientation === Orientation.Vertical ? (
                     <RectangleVertical size={16} />
@@ -326,7 +341,7 @@ export default function CropPanel({
                     key={preset.name}
                     onClick={() => handlePresetClick(preset)}
                   >
-                    {preset.name}
+                    {getPresetName(preset.name, t)}
                   </button>
                 ))}
               </div>
@@ -365,7 +380,7 @@ export default function CropPanel({
                       onBlur={handleApplyCustomRatio}
                       onChange={handleCustomInputChange}
                       onKeyDown={handleKeyDown}
-                      placeholder="W"
+                      placeholder={t('crop.width')}
                       type="number"
                       value={customW}
                     />
@@ -377,7 +392,7 @@ export default function CropPanel({
                       onBlur={handleApplyCustomRatio}
                       onChange={handleCustomInputChange}
                       onKeyDown={handleKeyDown}
-                      placeholder="H"
+                      placeholder={t('crop.height')}
                       type="number"
                       value={customH}
                     />
@@ -394,7 +409,7 @@ export default function CropPanel({
                   <button
                     className="p-1.5 rounded-md hover:bg-card-active text-text-secondary hover:text-text-primary transition-colors"
                     onClick={resetFineRotation}
-                    title="Reset Fine Rotation"
+                    title={t('crop.resetFineRotation')}
                     disabled={rotation === 0}
                   >
                     <RotateCcw size={14} />

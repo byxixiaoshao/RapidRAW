@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface PresetModalProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface PresetModalProps {
 }
 
 export default function AddPresetModal({ isOpen, onClose, onSave }: PresetModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
@@ -68,13 +70,13 @@ export default function AddPresetModal({ isOpen, onClose, onSave }: PresetModalP
         `}
         onClick={(e: any) => e.stopPropagation()}
       >
-        <h3 className="text-lg font-semibold text-text-primary mb-4">Save New Preset</h3>
+        <h3 className="text-lg font-semibold text-text-primary mb-4">{t('addPresetModal.title')}</h3>
         <input
           autoFocus
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter preset name..."
+          placeholder={t('addPresetModal.placeholder')}
           type="text"
           value={name}
         />
@@ -83,14 +85,14 @@ export default function AddPresetModal({ isOpen, onClose, onSave }: PresetModalP
             className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('addPresetModal.cancel')}
           </button>
           <button
             className="px-4 py-2 rounded-md bg-accent text-button-text font-semibold hover:bg-accent-hover disabled:bg-gray-500 disabled:text-white disabled:cursor-not-allowed transition-colors"
             disabled={!name.trim()}
             onClick={handleSave}
           >
-            Save
+            {t('addPresetModal.save')}
           </button>
         </div>
       </div>

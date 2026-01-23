@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface RenamePresetProps {
   currentName: string | undefined;
@@ -8,6 +9,7 @@ interface RenamePresetProps {
 }
 
 export default function RenamePresetModal({ isOpen, onClose, onSave, currentName }: RenamePresetProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
@@ -70,13 +72,13 @@ export default function RenamePresetModal({ isOpen, onClose, onSave, currentName
         `}
         onClick={(e: any) => e.stopPropagation()}
       >
-        <h3 className="text-lg font-semibold text-text-primary mb-4">Rename Preset</h3>
+        <h3 className="text-lg font-semibold text-text-primary mb-4">{t('renamePresetModal.title')}</h3>
         <input
           autoFocus
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter new preset name..."
+          placeholder={t('renamePresetModal.placeholder')}
           type="text"
           value={name}
         />
@@ -85,14 +87,14 @@ export default function RenamePresetModal({ isOpen, onClose, onSave, currentName
             className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('renamePresetModal.cancel')}
           </button>
           <button
             className="px-4 py-2 rounded-md bg-accent shadow-shiny text-button-text font-semibold hover:bg-accent-hover disabled:bg-gray-500 disabled:text-white disabled:cursor-not-allowed transition-colors"
             disabled={!name.trim() || name.trim() === currentName}
             onClick={handleSave}
           >
-            Save
+            {t('renamePresetModal.save')}
           </button>
         </div>
       </div>

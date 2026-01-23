@@ -4,6 +4,7 @@ import { AlertOctagon } from 'lucide-react';
 import clsx from 'clsx';
 import { ActiveChannel, Adjustments, Coord } from '../../utils/adjustments';
 import { Theme } from '../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
 
 export interface ChannelConfig {
   [index: string]: ColorData;
@@ -136,6 +137,7 @@ export default function CurveGraph({
   isForMask,
   onDragStateChange,
 }: CurveGraphProps) {
+  const { t } = useTranslation();
   const [activeChannel, setActiveChannel] = useState<ActiveChannel>(ActiveChannel.Luma);
   const [draggingPointIndex, setDraggingPointIndex] = useState<number | null>(null);
   const [localPoints, setLocalPoints] = useState<Array<Coord> | null>(null);
@@ -271,7 +273,7 @@ export default function CurveGraph({
   if (!propPoints || !points) {
     return (
       <div className="w-full aspect-square bg-surface-secondary p-1 rounded-md flex items-center justify-center text-text-secondary text-xs">
-        Curve data not available.
+        {t('curves.dataNotAvailable')}
       </div>
     );
   }
@@ -387,7 +389,7 @@ export default function CurveGraph({
             )}
             key="clipping"
             onClick={handleToggleClipping}
-            title="Toggle Clipping Warnings"
+            title={t('curves.toggleClipping')}
           >
             <AlertOctagon size={14} />
           </button>

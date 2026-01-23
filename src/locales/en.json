@@ -211,6 +211,7 @@
       "clearAllTagsMessage": "Are you sure you want to remove all AI-generated and user-added tags from all images in the current base folder?\n\nThis action cannot be undone."
     },
     "processing": {
+      "processingEngine": "Processing Engine",
       "previewResolution": "Editor Preview Resolution",
       "previewResolutionDescription": "Adjust the resolution used for editor previews. Lower resolutions improve performance on slower machines.",
       "highQualityZoom": "High Quality Zoom",
@@ -224,6 +225,7 @@
       "enableHighQuality": "Enable High Quality",
       "highlightCompression": "RAW Highlight Compression",
       "highlightCompressionDescription": "Adjust how aggressively highlights are compressed in RAW files.",
+      "amount": "Amount",
       "highlightCompressionAmount": "Amount",
       "backend": "Processing Backend",
       "backendDescription": "Choose which graphics API to use for processing.",
@@ -322,7 +324,8 @@
       "deleteAllEdits": "Delete All Edits in Folder",
       "openLogFile": "Open Log File",
       "viewApplicationLogs": "View Application Logs",
-      "viewApplicationLogsDescription": "View the application's log file for troubleshooting. The log is located at:"
+      "viewApplicationLogsDescription": "View the application's log file for troubleshooting. The log is located at:",
+      "noFolderSelected": "No folder selected"
     },
     "cloudService": {
       "comingSoon": "Coming Soon",
@@ -529,7 +532,8 @@
       "clearSidecarsWarning": "Are you sure you want to delete all sidecar files?\n\nThis will permanently remove all your edits for all images inside the current base folder and its subfolders.",
       "clearAiTagsWarning": "Are you sure you want to remove all AI-generated tags from all images in the current base folder?\n\nThis will not affect user-added tags. This action cannot be undone.",
       "clearAllTagsWarning": "Are you sure you want to remove all AI-generated and user-added tags from all images in the current base folder?\n\nThis action cannot be undone.",
-      "clearCacheWarning": "Are you sure you want to clear the thumbnail cache?\n\nAll thumbnails will need to be regenerated, which may be slow for large folders."
+      "clearCacheWarning": "Are you sure you want to clear the thumbnail cache?\n\nAll thumbnails will need to be regenerated, which may be slow for large folders.",
+      "loading": "Loading..."
     }
   },
   "community": {
@@ -702,5 +706,139 @@
     "grain": "Grain",
     "size": "Size",
     "roughness": "Roughness"
+  },
+  "aiPanel": {
+    "brushSize": "Brush Size",
+    "brushFeather": "Brush Feather",
+    "aiConnector": "AI Connector:",
+    "ready": "Ready",
+    "notDetected": "Not Detected",
+    "resetAllAiEdits": "Reset All AI Edits",
+    "noImageSelected": "No image selected.",
+    "edits": "Edits",
+    "editSettings": "Edit Settings",
+    "dropToCreateEdit": "Drop here to create a new edit",
+    "generativeReplace": "Generative Replace",
+    "useFastInpainting": "Use fast inpainting",
+    "examplePrompt": "e.g., a field of flowers"
+  },
+  "lutControl": {
+    "lut": "LUT",
+    "clearLut": "Clear LUT",
+    "intensity": "Intensity"
+  },
+  "exportPresets": {
+    "title": "Export Presets",
+    "selectPreset": "Select a preset...",
+    "saveCurrentSettings": "Save current settings as new preset",
+    "deletePreset": "Delete preset",
+    "presetName": "Preset Name"
+  },
+  "imagePicker": {
+    "clearImage": "Clear Image"
+  },
+  "colorWheel": {
+    "resetTooltip": "Double-click to reset"
+  },
+  "metadata": {
+    "title": "Metadata",
+    "filename": "Filename",
+    "dimensions": "Dimensions",
+    "captureDate": "Capture Date",
+    "openMap": "Click to open map in a new tab"
+  },
+  "mainLibrary": {
+    "search": {
+      "placeholder": "Search by tag or filename...",
+      "addTag": "Add another tag...",
+      "indexing": "Indexing Images...",
+      "indexingProgress": "Indexing... ({{current}}/{{total}})",
+      "separateTags": "Separate tags with {{comma}}",
+      "clear": "Clear search",
+      "title": "Search"
+    },
+    "filters": {
+      "colorLabel": "Filter by Color Label",
+      "noLabel": "No Label"
+    },
+    "thumbnail": {
+      "size": "Thumbnail Size",
+      "aspectRatio": "Thumbnail Aspect Ratio",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "fillSquare": "Fill Square",
+      "originalRatio": "Original Ratio"
+    },
+    "viewMode": {
+      "grid": "Grid",
+      "list": "List"
+    },
+    "sort": {
+      "by": "Sort by:",
+      "name": "Name",
+      "dateModified": "Date Modified",
+      "dateCreated": "Date Created",
+      "size": "Size",
+      "rating": "Rating"
+    },
+    "noResults": {
+      "title": "No Results Found",
+      "search": "Could not find an image based on filename or tags.",
+      "filter": "No images found that match your filter."
+    },
+    "folders": {
+      "home": "Home",
+      "openFolder": "Open Folder",
+      "refresh": "Refresh"
+    },
+    "settings": {
+      "title": "Settings",
+      "appearance": "Appearance"
+    },
+    "community": {
+      "title": "Community"
+    },
+    "indexing": {
+      "title": "Indexing Images",
+      "description": "Please wait while we index your images..."
+    },
+    "appTitle": "RapidRAW",
+    "loadingSettings": "Loading settings...",
+    "newVersionAvailable": "New version available!",
+    "or": "or",
+    "libraryTitle": "Library",
+    "importComplete": "Import Complete!",
+    "importFailed": "Import Failed!",
+    "communityPresets": "Community Presets",
+    "openAnotherFolder": "Open another folder",
+    "goToHomeScreen": "Go to Home Screen",
+    "indexingMessage": "This may take a moment."
+  },
+  "crop": {
+    "resetAll": "Reset All",
+    "switchOrientation": "Switch Orientation",
+    "widthPlaceholder": "W",
+    "heightPlaceholder": "H",
+    "resetFineRotation": "Reset Fine Rotation"
+  },
+  "export": {
+    "preview": "Preview",
+    "logo": "Logo"
+  },
+  "details": {
+    "noiseReduction": "Noise Reduction",
+    "luminance": "Luminance",
+    "color": "Color"
+  },
+  "tagging": {
+    "addTagPlaceholder": "Add a tag...",
+    "addTag": "Add tag",
+    "shortcuts": "SHORTCUTS"
+  },
+  "window": {
+    "close": "Close window",
+    "minimize": "Minimize window",
+    "maximize": "Maximize window"
   }
 }

@@ -289,6 +289,7 @@
       "enableHighQuality": "启用高质量",
       "highlightCompression": "RAW 高光压缩",
       "highlightCompressionDescription": "调整 RAW 文件中高光的压缩程度。",
+      "amount": "数量",
       "highlightCompressionAmount": "数量",
       "backend": "处理后端",
       "backendDescription": "选择用于处理的图形 API。",
@@ -302,8 +303,8 @@
       "linuxOptimizationDescription": "在某些 GPU 的 Linux 系统上提高性能。",
       "linuxOptimizationLabel": "启用兼容模式",
       "restartRequired": "需要重启",
-      "changesRequireRestart": "处理引擎的更改需要应用程序重启才能生效。",
       "saveAndRestart": "保存并重启",
+      "changesRequireRestart": "处理引擎的更改需要应用程序重启才能生效。",
       "generativeAi": "生成式 AI",
       "aiConnector": {
         "address": "AI Connector 地址",
@@ -386,10 +387,11 @@
       "confirmAllTagDeletion": "确认所有标签删除",
       "confirmCacheDeletion": "确认缓存删除",
       "confirmWindowTransparency": "确认窗口透明度",
-      "deleteAllEdits": "删除文件夹中的所有编辑",
+      "deleteAllEdits": "删除所有编辑",
       "openLogFile": "打开日志文件",
       "viewApplicationLogs": "查看应用程序日志",
-      "viewApplicationLogsDescription": "查看应用程序的日志文件以进行故障排除。日志位于："
+      "viewApplicationLogsDescription": "查看应用程序的日志文件以进行故障排除。日志位于：",
+      "noFolderSelected": "未选择文件夹"
     },
     "cloudService": {
       "comingSoon": "即将推出",
@@ -598,7 +600,8 @@
       "clearSidecarsWarning": "确定要删除所有边车文件吗？\n\n这将永久删除当前基础文件夹及其子文件夹中所有图像的所有编辑。",
       "clearAiTagsWarning": "确定要从当前基础文件夹中的所有图像中删除所有 AI 生成的标签吗？\n\n这不会影响用户添加的标签。此操作无法撤销。",
       "clearAllTagsWarning": "确定要从当前基础文件夹中的所有图像中删除所有 AI 生成和用户添加的标签吗？\n\n此操作无法撤销。",
-      "clearCacheWarning": "确定要清除缩略图缓存吗？\n\n所有缩略图都需要重新生成，这对于大型文件夹可能会很慢。"
+      "clearCacheWarning": "确定要清除缩略图缓存吗？\n\n所有缩略图都需要重新生成，这对于大型文件夹可能会很慢。",
+      "loading": "加载中..."
     }
   },
   "mainLibrary": {
@@ -775,5 +778,84 @@
     "saved": "已保存",
     "featured": "想让你的预设被推荐吗？",
     "createIssue": "在 GitHub 上创建 issue"
+  },
+  "aiPanel": {
+    "brushSize": "画笔大小",
+    "brushFeather": "画笔羽化",
+    "aiConnector": "AI Connector:",
+    "ready": "就绪",
+    "notDetected": "未检测到",
+    "resetAllAiEdits": "重置所有 AI 编辑",
+    "noImageSelected": "未选择图像。",
+    "edits": "编辑",
+    "editSettings": "编辑设置",
+    "dropToCreateEdit": "拖放此处创建新编辑",
+    "generativeReplace": "生成式替换",
+    "useFastInpainting": "使用快速修复",
+    "examplePrompt": "例如，一片花田"
+  },
+  "lutControl": {
+    "lut": "LUT",
+    "clearLut": "清除 LUT",
+    "intensity": "强度"
+  },
+  "exportPresets": {
+    "title": "导出预设",
+    "selectPreset": "选择预设...",
+    "saveCurrentSettings": "将当前设置保存为新预设",
+    "deletePreset": "删除预设",
+    "presetName": "预设名称"
+  },
+  "imagePicker": {
+    "clearImage": "清除图像"
+  },
+  "colorWheel": {
+    "resetTooltip": "双击重置"
+  },
+  "metadata": {
+    "title": "元数据",
+    "filename": "文件名",
+    "dimensions": "尺寸",
+    "captureDate": "拍摄日期",
+    "openMap": "点击在新标签页中打开地图"
+  },
+  "mainLibrary": {
+    "appTitle": "RapidRAW",
+    "loadingSettings": "正在加载设置...",
+    "newVersionAvailable": "有新版本可用！",
+    "or": "或",
+    "libraryTitle": "图库",
+    "importComplete": "导入完成！",
+    "importFailed": "导入失败！",
+    "communityPresets": "社区预设",
+    "openAnotherFolder": "打开另一个文件夹",
+    "goToHomeScreen": "返回主屏幕",
+    "indexingMessage": "这可能需要一点时间。"
+  },
+  "crop": {
+    "resetAll": "重置全部",
+    "switchOrientation": "切换方向",
+    "widthPlaceholder": "宽",
+    "heightPlaceholder": "高",
+    "resetFineRotation": "重置精细旋转"
+  },
+  "export": {
+    "preview": "预览",
+    "logo": "标志"
+  },
+  "details": {
+    "noiseReduction": "降噪",
+    "luminance": "明度",
+    "color": "色彩"
+  },
+  "tagging": {
+    "addTagPlaceholder": "添加标签...",
+    "addTag": "添加标签",
+    "shortcuts": "快捷键"
+  },
+  "window": {
+    "close": "关闭窗口",
+    "minimize": "最小化窗口",
+    "maximize": "最大化窗口"
   }
 }

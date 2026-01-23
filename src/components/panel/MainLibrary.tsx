@@ -1382,8 +1382,8 @@ export default function MainLibrary({
       return (
         <div className="flex-1 flex flex-col items-center justify-center h-full rounded-lg bg-bg-primary p-8 text-center">
           <ImageIcon size={80} className="text-accent opacity-20 mb-6 animate-pulse" />
-          <h1 className="text-3xl font-bold text-primary mb-2">RapidRAW</h1>
-          <p className="text-text-secondary mb-8">Loading settings...</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">{t('mainLibrary.appTitle')}</h1>
+          <p className="text-text-secondary mb-8">{t('mainLibrary.loadingSettings')}</p>
         </div>
       );
     }
@@ -1421,7 +1421,7 @@ export default function MainLibrary({
           ) : (
             <>
               <div className="my-auto text-left">
-                <h1 className="text-5xl font-bold text-text-primary text-shadow-shiny mb-4">RapidRAW</h1>
+                <h1 className="text-5xl font-bold text-text-primary text-shadow-shiny mb-4">{t('mainLibrary.appTitle')}</h1>
                 <p className="text-text-secondary mb-10 max-w-md">
                   {hasLastPath ? (
                     <>
@@ -1500,7 +1500,7 @@ export default function MainLibrary({
                       >
                         <span className={isUpdateAvailable ? 'group-hover:hidden' : ''}>Version {appVersion}</span>
                         {isUpdateAvailable && (
-                          <span className="hidden group-hover:inline text-yellow-400">New version available!</span>
+                          <span className="hidden group-hover:inline text-yellow-400">{t('mainLibrary.newVersionAvailable')}</span>
                         )}
                       </span>
                     </p>
@@ -1514,7 +1514,7 @@ export default function MainLibrary({
                       >
                         Donate on Ko-Fi
                       </a>
-                      <span className="mx-1">or</span>
+                      <span className="mx-1">{t('mainLibrary.or')}</span>
                       <a
                         href="https://github.com/CyberTimon/RapidRAW"
                         className="hover:underline"
@@ -1541,7 +1541,7 @@ export default function MainLibrary({
     >
       <header className="p-4 flex-shrink-0 flex justify-between items-center border-b border-border-color gap-4">
         <div className="min-w-0">
-          <h2 className="text-2xl font-bold text-primary">Library</h2>
+          <h2 className="text-2xl font-bold text-primary">{t('mainLibrary.libraryTitle')}</h2>
           <div className="flex items-center gap-2">
             <p className="text-sm text-text-secondary truncate">{currentFolderPath}</p>
             <div
@@ -1565,13 +1565,13 @@ export default function MainLibrary({
           {importState.status === Status.Success && (
             <div className="flex items-center gap-2 text-sm text-green-400">
               <Check size={16} />
-              <span>Import Complete!</span>
+              <span>{t('mainLibrary.importComplete')}</span>
             </div>
           )}
           {importState.status === Status.Error && (
             <div className="flex items-center gap-2 text-sm text-red-400">
               <AlertTriangle size={16} />
-              <span>Import Failed!</span>
+              <span>{t('mainLibrary.importFailed')}</span>
             </div>
           )}
           <SearchInput
@@ -1596,21 +1596,21 @@ export default function MainLibrary({
           <Button
             className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
             onClick={onNavigateToCommunity}
-            title="Community Presets"
+            title={t('mainLibrary.communityPresets')}
           >
             <Users className="w-8 h-8" />
           </Button>
           <Button
             className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
             onClick={onOpenFolder}
-            title="Open another folder"
+            title={t('mainLibrary.openAnotherFolder')}
           >
             <Folder className="w-8 h-8" />
           </Button>
           <Button
             className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
             onClick={onGoHome}
-            title="Go to Home Screen"
+            title={t('mainLibrary.goToHomeScreen')}
           >
             <Home className="w-8 h-8" />
           </Button>
@@ -1706,14 +1706,14 @@ export default function MainLibrary({
             {aiModelDownloadStatus
               ? `Downloading ${aiModelDownloadStatus}...`
               : isIndexing && indexingProgress.total > 0
-              ? `Indexing images... (${indexingProgress.current}/${indexingProgress.total})`
+              ? `${t('mainLibrary.indexingImages')} (${indexingProgress.current}/${indexingProgress.total})`
               : importState.status === Status.Importing &&
                 importState?.progress?.total &&
                 importState.progress.total > 0
-              ? `Importing images... (${importState.progress?.current}/${importState.progress?.total})`
-              : 'Processing images...'}
+              ? `${t('mainLibrary.importingImages')} (${importState.progress?.current}/${importState.progress?.total})`
+              : t('mainLibrary.processingImages')}
           </p>
-          <p className="text-sm mt-2">This may take a moment.</p>
+          <p className="text-sm mt-2">{t('mainLibrary.indexingMessage')}</p>
         </div>
       ) : searchCriteria.tags.length > 0 || searchCriteria.text ? (
         <div
@@ -1721,11 +1721,11 @@ export default function MainLibrary({
           onContextMenu={onEmptyAreaContextMenu}
         >
           <Search className="h-12 w-12 text-secondary mb-4" />
-          <p className="text-lg font-semibold">No Results Found</p>
+          <p className="text-lg font-semibold">{t('mainLibrary.noResultsFound')}</p>
           <p className="text-sm mt-2 max-w-sm">
-            Could not find an image based on filename or tags.
+            {t('mainLibrary.noResultsMessage')}
             {!appSettings?.enableAiTagging &&
-              ' For a more comprehensive search, enable automatic tagging in Settings.'}
+              ` ${t('mainLibrary.enableAiTaggingMessage')}`}
           </p>
         </div>
       ) : (
@@ -1734,7 +1734,7 @@ export default function MainLibrary({
           onContextMenu={onEmptyAreaContextMenu}
         >
           <SlidersHorizontal className="h-12 w-12 text-secondary mb-4 text-text-secondary" />
-          <p className="text-text-secondary">No images found that match your filter.</p>
+          <p className="text-text-secondary">{t('mainLibrary.noImagesFound')}</p>
         </div>
       )}
     </div>

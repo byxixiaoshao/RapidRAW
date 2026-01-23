@@ -1,5 +1,6 @@
 import { open } from '@tauri-apps/plugin-dialog';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ImagePickerProps {
   imageName: string | null;
@@ -14,6 +15,7 @@ export default function ImagePicker({
   onClear,
   label,
 }: ImagePickerProps) {
+  const { t } = useTranslation();
   const handleSelectFile = async () => {
     try {
       const selected = await open({
@@ -41,9 +43,9 @@ export default function ImagePicker({
           <button
             onClick={handleSelectFile}
             className="text-sm text-text-primary text-right select-none cursor-pointer truncate max-w-[150px] hover:text-accent transition-colors"
-            title={imageName || 'Select an image file'}
+            title={imageName || t('imagePicker.selectImageFile')}
           >
-            {imageName || 'Select'}
+            {imageName || t('imagePicker.select')}
           </button>
           
           {imageName && (
@@ -53,7 +55,7 @@ export default function ImagePicker({
                          w-0 ml-0 opacity-0 group-hover:w-6 group-hover:ml-0 group-hover:opacity-100 
                          overflow-hidden pointer-events-none group-hover:pointer-events-auto
                          transition-all duration-200 ease-in-out"
-              title="Clear Image"
+              title={t('imagePicker.clearImage')}
             >
               <X size={14} />
             </button>

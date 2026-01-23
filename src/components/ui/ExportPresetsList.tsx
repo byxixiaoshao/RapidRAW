@@ -4,6 +4,7 @@ import { Plus, Trash2, Save, X, Check } from 'lucide-react';
 import { ExportPreset } from './ExportImportProperties';
 import { AppSettings } from './AppProperties';
 import Dropdown from './Dropdown';
+import { useTranslation } from 'react-i18next';
 
 interface ExportPresetsListProps {
   appSettings: AppSettings | null;
@@ -18,6 +19,7 @@ export default function ExportPresetsList({
   onApplyPreset,
   onSettingsChange,
 }: ExportPresetsListProps) {
+  const { t } = useTranslation();
   const [isCreating, setIsCreating] = useState(false);
   const [newPresetName, setNewPresetName] = useState('');
   const [selectedPresetId, setSelectedPresetId] = useState<string>('');
@@ -92,7 +94,7 @@ export default function ExportPresetsList({
 
   return (
     <div className="mb-6">
-      <h3 className="text-sm font-semibold text-text-primary mb-3 border-surface pb-2">Export Presets</h3>
+      <h3 className="text-sm font-semibold text-text-primary mb-3 border-surface pb-2">{t('exportPresets.title')}</h3>
 
       {!isCreating ? (
         <div className="flex gap-2">
@@ -101,14 +103,14 @@ export default function ExportPresetsList({
               value={selectedPresetId}
               onChange={handleSelect}
               options={dropdownOptions}
-              placeholder="Select a preset..."
+              placeholder={t('exportPresets.selectPreset')}
             />
           </div>
 
           <button
             onClick={() => setIsCreating(true)}
             className="p-2 bg-surface hover:bg-card-active rounded-md text-text-primary transition-colors"
-            title="Save current settings as new preset"
+            title={t('exportPresets.saveAsNewPreset')}
           >
             <Plus size={18} />
           </button>
@@ -121,14 +123,14 @@ export default function ExportPresetsList({
                 className={`p-2 bg-surface hover:bg-card-active rounded-md transition-colors ${
                   isSaved ? 'text-green-500' : 'text-text-secondary'
                 }`}
-                title={isSaved ? "Saved!" : "Overwrite selected preset"}
+                title={isSaved ? t('exportPresets.saved') : t('exportPresets.overwritePreset')}
               >
                 {isSaved ? <Check size={18} /> : <Save size={18} />}
               </button>
               <button
                 onClick={handleDeletePreset}
                 className="p-2 bg-surface hover:bg-red-500/20 hover:text-red-500 rounded-md text-text-secondary transition-colors"
-                title="Delete preset"
+                title={t('exportPresets.deletePreset')}
               >
                 <Trash2 size={18} />
               </button>
@@ -140,7 +142,7 @@ export default function ExportPresetsList({
           <input
             autoFocus
             type="text"
-            placeholder="Preset Name"
+            placeholder={t('exportPresets.presetName')}
             value={newPresetName}
             onChange={(e) => setNewPresetName(e.target.value)}
             className="flex-grow bg-bg-primary border border-surface rounded-md p-2 text-sm text-text-primary focus:ring-accent focus:border-accent"

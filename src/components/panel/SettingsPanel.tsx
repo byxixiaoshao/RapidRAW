@@ -48,6 +48,7 @@ interface DataActionItemProps {
   isProcessing: boolean;
   message: string;
   title: string;
+  t: any;
 }
 
 interface KeybindItemProps {
@@ -139,13 +140,14 @@ const DataActionItem = ({
   isProcessing,
   message,
   title,
+  t,
 }: DataActionItemProps) => (
   <div className="pb-6 border-b border-border-color last:border-b-0 last:pb-0">
     <h3 className="text-sm font-medium text-text-primary mb-2">{title}</h3>
     <p className="text-xs text-text-secondary mb-3">{description}</p>
     <Button variant="destructive" onClick={buttonAction} disabled={isProcessing || disabled}>
       {icon}
-      {isProcessing ? 'Processing...' : buttonText}
+      {isProcessing ? t('settings.processing') : buttonText}
     </Button>
     {message && <p className="text-sm text-accent mt-3">{message}</p>}
   </div>
@@ -768,6 +770,7 @@ export default function SettingsPanel({
                           isProcessing={isClearingAiTags}
                           message={aiTagsClearMessage}
                           title={t('settings.dataActions.clearAiTags')}
+                          t={t}
                         />
                         <DataActionItem
                           buttonAction={handleClearTags}
@@ -778,6 +781,7 @@ export default function SettingsPanel({
                           isProcessing={isClearingTags}
                           message={tagsClearMessage}
                           title={t('settings.dataActions.clearAllTags')}
+                          t={t}
                         />
                       </div>
                     </div>
@@ -796,7 +800,7 @@ export default function SettingsPanel({
                 className="space-y-8"
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Processing Engine</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.processing.processingEngine')}</h2>
                   <div className="space-y-6">
                     <SettingItem
                       description={t('settings.processing.previewResolutionDescription')}
@@ -810,26 +814,26 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label="High Quality Zoom"
-                      description="Load a higher quality version of the image when zooming in for more detail. Disabling this can improve performance."
+                      label={t('settings.processing.highQualityZoom')}
+                      description={t('settings.processing.highQualityZoomDescription')}
                     >
                       <Switch
                         checked={appSettings?.enableZoomHifi ?? true}
                         id="zoom-hifi-toggle"
-                        label="Enable High Quality Zoom"
+                        label={t('settings.processing.enableHighQualityZoom')}
                         onChange={(checked) => onSettingsChange({ ...appSettings, enableZoomHifi: checked })}
                       />
                     </SettingItem>
 
                     <div className="space-y-4">
                       <SettingItem
-                        label="Live Interactive Previews"
-                        description="Update the preview immediately while dragging sliders. Disable this if the interface feels laggy during adjustments."
+                        label={t('settings.processing.liveInteractivePreviews')}
+                        description={t('settings.processing.liveInteractivePreviewsDescription')}
                       >
                         <Switch
                           checked={appSettings?.enableLivePreviews ?? true}
                           id="live-previews-toggle"
-                          label="Enable Live Previews"
+                          label={t('settings.processing.enableLivePreviews')}
                           onChange={(checked) => {
                             setHasInteractedWithLivePreview(true);
                             onSettingsChange({ ...appSettings, enableLivePreviews: checked });
@@ -848,13 +852,13 @@ export default function SettingsPanel({
                           >
                             <div className="pl-4 border-l-2 border-border-color ml-1">
                               <SettingItem
-                                label="High Quality Live Preview"
-                                description="Uses higher resolution and less compression during interaction. Significantly increases GPU load."
+                                label={t('settings.processing.highQualityLivePreview')}
+                                description={t('settings.processing.highQualityLivePreviewDescription')}
                               >
                                 <Switch
                                   checked={appSettings?.enableHighQualityLivePreviews ?? false}
                                   id="hq-live-previews-toggle"
-                                  label="Enable High Quality"
+                                  label={t('settings.processing.enableHighQuality')}
                                   onChange={(checked) =>
                                     onSettingsChange({ ...appSettings, enableHighQualityLivePreviews: checked })
                                   }
@@ -871,7 +875,7 @@ export default function SettingsPanel({
                       description={t('settings.processing.highlightCompressionDescription')}
                     >
                       <Slider
-                        label="Amount"
+                        label={t('settings.processing.amount')}
                         min={1}
                         max={10}
                         step={0.1}
@@ -901,7 +905,7 @@ export default function SettingsPanel({
                       <Switch
                         checked={processingSettings.linuxGpuOptimization}
                         id="gpu-compat-toggle"
-                        label="Enable Compatibility Mode"
+                        label={t('settings.processing.linuxOptimizationLabel')}
                         onChange={(checked) => handleProcessingSettingChange('linuxGpuOptimization', checked)}
                       />
                     </SettingItem>
@@ -921,10 +925,9 @@ export default function SettingsPanel({
                 </div>
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Generative AI</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.generativeAi.title')}</h2>
                   <p className="text-sm text-text-secondary mb-4">
-                    RapidRAW's AI is built for flexibility. Choose your ideal workflow, from fast local tools to
-                    powerful self-hosting.
+                    {t('settings.generativeAi.description')}
                   </p>
 
                   <AiProviderSwitch selectedProvider={aiProvider} onProviderChange={handleProviderChange} />
@@ -939,15 +942,14 @@ export default function SettingsPanel({
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <h3 className="text-lg font-semibold text-text-primary">Built-in AI (CPU)</h3>
+                          <h3 className="text-lg font-semibold text-text-primary">{t('settings.aiProviders.cpu')}</h3>
                           <p className="text-sm text-text-secondary mt-1">
-                            Integrated directly into RapidRAW, these features run entirely on your computer. They are
-                            fast, free, and require no setup, making them ideal for everyday workflow acceleration.
+                            {t('settings.aiDescriptions.cpu')}
                           </p>
                           <ul className="mt-3 space-y-1 list-disc list-inside text-sm text-text-secondary">
-                            <li>AI Masking (Subject, Sky, Foreground)</li>
-                            <li>Automatic Image Tagging</li>
-                            <li>Simple CPU-based Generative Replace</li>
+                            <li>{t('settings.aiFeatures.cpu.0')}</li>
+                            <li>{t('settings.aiFeatures.cpu.1')}</li>
+                            <li>{t('settings.aiFeatures.cpu.2')}</li>
                           </ul>
                         </motion.div>
                       )}
@@ -960,15 +962,14 @@ export default function SettingsPanel({
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <h3 className="text-lg font-semibold text-text-primary">Self-Hosted (RapidRAW AI Connector)</h3>
+                          <h3 className="text-lg font-semibold text-text-primary">{t('settings.aiProviders.aiConnector')}</h3>
                           <p className="text-sm text-text-secondary mt-1">
-                            For users with a capable GPU who want maximum control, connect RapidRAW to your own local
-                            AI Connector server. This gives you full control for technical workflows.
+                            {t('settings.aiDescriptions.aiConnector')}
                           </p>
                           <ul className="mt-3 mb-6 space-y-1 list-disc list-inside text-sm text-text-secondary">
-                            <li>Use your own ComfyUI instance</li>
-                            <li>Cost-free advanced generative edits</li>
-                            <li>Custom workflow selection</li>
+                            <li>{t('settings.aiFeatures.aiConnector.0')}</li>
+                            <li>{t('settings.aiFeatures.aiConnector.1')}</li>
+                            <li>{t('settings.aiFeatures.aiConnector.2')}</li>
                           </ul>
                           <div className="space-y-6">
                             <SettingItem
@@ -1018,24 +1019,22 @@ export default function SettingsPanel({
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <h3 className="text-lg font-semibold text-text-primary">Cloud Service</h3>
+                          <h3 className="text-lg font-semibold text-text-primary">{t('settings.aiProviders.cloud')}</h3>
                           <p className="text-sm text-text-secondary mt-1">
-                            For those who want a simpler solution, an optional subscription provides the same
-                            high-quality results as self-hosting without any hassle. This is the most convenient option
-                            and the best way to support the project.
+                            {t('settings.aiDescriptions.cloud')}
                           </p>
                           <ul className="mt-3 space-y-1 list-disc list-inside text-sm text-text-secondary">
-                            <li>Maximum convenience, no setup</li>
-                            <li>Same results as self-hosting</li>
-                            <li>No powerful hardware required</li>
+                            <li>{t('settings.aiFeatures.cloud.0')}</li>
+                            <li>{t('settings.aiFeatures.cloud.1')}</li>
+                            <li>{t('settings.aiFeatures.cloud.2')}</li>
                           </ul>
 
                           <div className="mt-6 p-4 bg-bg-primary rounded-lg border border-border-color text-center space-y-3">
                             <span className="inline-block bg-accent text-button-text text-xs font-semibold px-2 py-1 rounded-full">
-                              Coming Soon
+                              {t('settings.cloudService.comingSoon')}
                             </span>
                             <p className="text-sm text-text-secondary">
-                              Keep an eye on the GitHub page to be notified when the cloud service is available.
+                              {t('settings.cloudService.comingSoonDescription')}
                             </p>
                           </div>
                         </motion.div>
@@ -1045,18 +1044,18 @@ export default function SettingsPanel({
                 </div>
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Data Management</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.dataManagement.title')}</h2>
                   <div className="space-y-6">
                     <DataActionItem
                       buttonAction={handleClearSidecars}
-                      buttonText="Delete All Edits in Folder"
+                      buttonText={t('settings.buttons.deleteAllEdits')}
                       description={
                         <>
-                          This will delete all{' '}
+                          {t('settings.dataManagement.clearSidecarsDescription')}
                           <code className="bg-bg-primary px-1 rounded text-text-primary">.rrdata</code> files
-                          (containing your edits) within the current base folder:
+                          within the current base folder:
                           <span className="block font-mono text-xs bg-bg-primary p-2 rounded mt-2 break-all border border-border-color">
-                            {effectiveRootPath || 'No folder selected'}
+                            {effectiveRootPath || t('settings.dataManagement.noFolderSelected')}
                           </span>
                         </>
                       }
@@ -1064,17 +1063,19 @@ export default function SettingsPanel({
                       icon={<Trash2 size={16} className="mr-2" />}
                       isProcessing={isClearing}
                       message={clearMessage}
-                      title="Clear All Sidecar Files"
+                      title={t('settings.dataManagement.clearSidecars')}
+                      t={t}
                     />
 
                     <DataActionItem
                       buttonAction={handleClearCache}
-                      buttonText="Clear Thumbnail Cache"
-                      description="This will delete all cached thumbnail images. They will be regenerated automatically as you browse your library."
+                      buttonText={t('settings.buttons.clearCache')}
+                      description={t('settings.dataManagement.clearThumbnailCacheDescription')}
                       icon={<Trash2 size={16} className="mr-2" />}
                       isProcessing={isClearingCache}
                       message={cacheClearMessage}
-                      title="Clear Thumbnail Cache"
+                      title={t('settings.dataManagement.clearThumbnailCache')}
+                      t={t}
                     />
 
                     <DataActionItem
@@ -1083,12 +1084,12 @@ export default function SettingsPanel({
                           await invoke(Invokes.ShowInFinder, { path: logPath });
                         }
                       }}
-                      buttonText="Open Log File"
+                      buttonText={t('settings.dataManagement.openLogFile')}
                       description={
                         <>
-                          View the application's log file for troubleshooting. The log is located at:
+                          {t('settings.dataManagement.viewApplicationLogsDescription')}
                           <span className="block font-mono text-xs bg-bg-primary p-2 rounded mt-2 break-all border border-border-color">
-                            {logPath || 'Loading...'}
+                            {logPath || t('settings.messages.loading')}
                           </span>
                         </>
                       }
@@ -1096,7 +1097,8 @@ export default function SettingsPanel({
                       icon={<ExternalLinkIcon size={16} className="mr-2" />}
                       isProcessing={false}
                       message=""
-                      title="View Application Logs"
+                      title={t('settings.dataManagement.viewApplicationLogs')}
+                      t={t}
                     />
                   </div>
                 </div>
@@ -1113,51 +1115,51 @@ export default function SettingsPanel({
                 className="space-y-8"
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Keyboard Shortcuts</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.keyboardShortcuts.title')}</h2>
                   <div className="space-y-4">
                     <div>
-                      <h3 className="text-lg font-semibold pt-3 pb-2 text-accent">General</h3>
+                      <h3 className="text-lg font-semibold pt-3 pb-2 text-accent">{t('settings.keyboardShortcuts.categories.general')}</h3>
                       <div className="divide-y divide-border-color">
-                        <KeybindItem keys={['Space', 'Enter']} description="Open selected image" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'C']} description="Copy selected adjustments" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'V']} description="Paste copied adjustments" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Shift', '+', 'C']} description="Copy selected file(s)" />
+                        <KeybindItem keys={['Space', 'Enter']} description={t('settings.keyboardShortcuts.openSelectedImage')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'C']} description={t('settings.keyboardShortcuts.copySelectedAdjustments')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'V']} description={t('settings.keyboardShortcuts.pasteCopiedAdjustments')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Shift', '+', 'C']} description={t('settings.keyboardShortcuts.copySelectedFiles')} />
                         <KeybindItem
-                          description="Paste file(s) to current folder"
+                          description={t('settings.keyboardShortcuts.pasteFilesToCurrentFolder')}
                           keys={['Ctrl/Cmd', '+', 'Shift', '+', 'V']}
                         />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'A']} description="Select all images" />
-                        <KeybindItem keys={['Delete']} description="Delete selected file(s)" />
-                        <KeybindItem keys={['0-5']} description="Set star rating for selected image(s)" />
-                        <KeybindItem keys={['Shift', '+', '0-5']} description="Set color label for selected image(s)" />
-                        <KeybindItem keys={['↑', '↓', '←', '→']} description="Navigate images in library" />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'A']} description={t('settings.keyboardShortcuts.selectAllImages')} />
+                        <KeybindItem keys={['Delete']} description={t('settings.keyboardShortcuts.deleteSelectedFiles')} />
+                        <KeybindItem keys={['0-5']} description={t('settings.keyboardShortcuts.setStarRating')} />
+                        <KeybindItem keys={['Shift', '+', '0-5']} description={t('settings.keyboardShortcuts.setColorLabel')} />
+                        <KeybindItem keys={['↑', '↓', '←', '→']} description={t('settings.keyboardShortcuts.navigateImagesInLibrary')} />
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold pt-3 pb-2 text-accent">Editor</h3>
+                      <h3 className="text-lg font-semibold pt-3 pb-2 text-accent">{t('settings.keyboardShortcuts.categories.editor')}</h3>
                       <div className="divide-y divide-border-color">
-                        <KeybindItem keys={['Esc']} description="Deselect mask, exit crop/fullscreen/editor" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Z']} description="Undo adjustment" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Y']} description="Redo adjustment" />
-                        <KeybindItem keys={['Delete']} description="Delete selected mask/patch or image" />
-                        <KeybindItem keys={['Space']} description="Cycle zoom (Fit, 2x Fit, 100%)" />
-                        <KeybindItem keys={['←', '→']} description="Previous / Next image" />
-                        <KeybindItem keys={['↑', '↓']} description="Zoom in / Zoom out (by step)" />
-                        <KeybindItem keys={['Shift', '+', 'Mouse Wheel']} description="Adjust slider value by 2 steps" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', '+']} description="Zoom in" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', '-']} description="Zoom out" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', '0']} description="Zoom to fit" />
-                        <KeybindItem keys={['Ctrl/Cmd', '+', '1']} description="Zoom to 100%" />
-                        <KeybindItem keys={['F']} description="Toggle fullscreen" />
-                        <KeybindItem keys={['B']} description="Show original (before/after)" />
-                        <KeybindItem keys={['D']} description="Toggle Adjustments panel" />
-                        <KeybindItem keys={['R']} description="Toggle Crop panel" />
-                        <KeybindItem keys={['M']} description="Toggle Masks panel" />
-                        <KeybindItem keys={['K']} description="Toggle AI panel" />
-                        <KeybindItem keys={['P']} description="Toggle Presets panel" />
-                        <KeybindItem keys={['I']} description="Toggle Metadata panel" />
-                        <KeybindItem keys={['W']} description="Toggle Waveform display" />
-                        <KeybindItem keys={['E']} description="Toggle Export panel" />
+                        <KeybindItem keys={['Esc']} description={t('settings.keyboardShortcuts.deselectMask')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Z']} description={t('settings.keyboardShortcuts.undoAdjustment')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', 'Y']} description={t('settings.keyboardShortcuts.redoAdjustment')} />
+                        <KeybindItem keys={['Delete']} description={t('settings.keyboardShortcuts.deleteSelectedMask')} />
+                        <KeybindItem keys={['Space']} description={t('settings.keyboardShortcuts.cycleZoom')} />
+                        <KeybindItem keys={['←', '→']} description={t('settings.keyboardShortcuts.previousNextImage')} />
+                        <KeybindItem keys={['↑', '↓']} description={t('settings.keyboardShortcuts.zoomInOut')} />
+                        <KeybindItem keys={['Shift', '+', 'Mouse Wheel']} description={t('settings.keyboardShortcuts.adjustSliderBy2Steps')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', '+']} description={t('settings.keyboardShortcuts.zoomIn')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', '-']} description={t('settings.keyboardShortcuts.zoomOut')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', '0']} description={t('settings.keyboardShortcuts.zoomToFit')} />
+                        <KeybindItem keys={['Ctrl/Cmd', '+', '1']} description={t('settings.keyboardShortcuts.zoomTo100')} />
+                        <KeybindItem keys={['F']} description={t('settings.keyboardShortcuts.toggleFullscreen')} />
+                        <KeybindItem keys={['B']} description={t('settings.keyboardShortcuts.showOriginalImage')} />
+                        <KeybindItem keys={['D']} description={t('settings.keyboardShortcuts.toggleAdjustmentsPanel')} />
+                        <KeybindItem keys={['R']} description={t('settings.keyboardShortcuts.toggleCropPanel')} />
+                        <KeybindItem keys={['M']} description={t('settings.keyboardShortcuts.toggleMaskPanel')} />
+                        <KeybindItem keys={['K']} description={t('settings.keyboardShortcuts.toggleAiPanel')} />
+                        <KeybindItem keys={['P']} description={t('settings.keyboardShortcuts.togglePresetsPanel')} />
+                        <KeybindItem keys={['I']} description={t('settings.keyboardShortcuts.toggleMetadataPanel')} />
+                        <KeybindItem keys={['W']} description={t('settings.keyboardShortcuts.toggleWaveformDisplay')} />
+                        <KeybindItem keys={['E']} description={t('settings.keyboardShortcuts.toggleExportPanel')} />
                       </div>
                     </div>
                   </div>
