@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -147,6 +148,7 @@ export default function MasksPanel({
   setIsMaskControlHovered,
   onDragStateChange,
 }: MasksPanelProps) {
+  const { t } = useTranslation();
   const [expandedContainers, setExpandedContainers] = useState<Set<string>>(new Set());
   const [activeDragItem, setActiveDragItem] = useState<DragData | null>(null);
   const [renamingId, setRenamingId] = useState<string | null>(null);
@@ -506,8 +508,8 @@ export default function MasksPanel({
       <div className="flex flex-col h-full select-none overflow-hidden" onClick={handleDeselect} onContextMenu={handlePanelContextMenu}>
         
         <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface h-[69px]">
-            <h2 className="text-xl font-bold text-primary text-shadow-shiny">Masking</h2>
-            <button className="p-2 rounded-full hover:bg-surface transition-colors" disabled={adjustments.masks.length === 0} onClick={handleResetAllMasks} title="Reset All Masks">
+            <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('masking.title')}</h2>
+            <button className="p-2 rounded-full hover:bg-surface transition-colors" disabled={adjustments.masks.length === 0} onClick={handleResetAllMasks} title={t('masking.resetAllMasks')}>
                <RotateCcw size={18} />
             </button>
         </div>
@@ -515,7 +517,7 @@ export default function MasksPanel({
         <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col min-h-0">
             <div className="p-4 pb-2 z-10 flex-shrink-0">
                 <p className="text-sm mb-3 font-semibold text-text-primary">
-                  {activeMaskContainerId ? "Add to Mask" : "Create New Mask"}
+                  {activeMaskContainerId ? t('masking.addToMask') : t('masking.createNewMask')}
                 </p>
                 <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                     {MASK_PANEL_CREATION_TYPES.map((maskType: MaskType) => (
@@ -539,9 +541,9 @@ export default function MasksPanel({
                         transition={{ duration: 0.2 }}
                         className={`flex-col px-4 pb-2 space-y-1 transition-colors ${isRootOver ? 'bg-surface' : ''}`}
                     >
-                        <p className="text-sm my-3 font-semibold text-text-primary">Masks</p>
+                        <p className="text-sm my-3 font-semibold text-text-primary">{t('masking.masks')}</p>
                         
-                        {isMaskListEmpty && <div className="text-center text-text-secondary text-sm py-4 opacity-70">No masks created.</div>}
+                        {isMaskListEmpty && <div className="text-center text-text-secondary text-sm py-4 opacity-70">{t('masking.noMasksCreated')}</div>}
                         
                         <AnimatePresence 
                           initial={false} 

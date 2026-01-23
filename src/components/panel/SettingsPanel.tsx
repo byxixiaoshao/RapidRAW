@@ -582,21 +582,18 @@ export default function SettingsPanel({
                       />
                     </SettingItem>
 
-                    <SettingItem
-                      label={t('settings.exif.label')}
-                      description={t('settings.exif.description')}
-                    >
+                    <SettingItem label={t('settings.exif.label')} description={t('settings.exif.description')}>
                       <Switch
                         checked={appSettings?.enableExifReading ?? false}
                         id="exif-reading-toggle"
-                        label="EXIF Reading"
+                        label={t('settings.exif.reading')}
                         onChange={(checked) => onSettingsChange({ ...appSettings, enableExifReading: checked })}
                       />
                     </SettingItem>
 
                     <SettingItem
                       description={t('settings.transparency.description')}
-                      label="Window Effects"
+                      label={t('settings.transparency.windowEffects')}
                     >
                       <Switch
                         checked={appSettings?.transparent ?? true}
@@ -626,14 +623,13 @@ export default function SettingsPanel({
                 </div>
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Adjustments Visibility</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.adjustmentsVisibility.title')}</h2>
                   <p className="text-sm text-text-secondary mb-4">
-                    Hide adjustment sections you don't use often to simplify the editing panel. Your settings will be
-                    preserved and applied even when hidden.
+                    {t('settings.adjustmentsVisibility.description')}
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <Switch
-                      label="Chromatic Aberration"
+                      label={t('settings.adjustmentsVisibility.chromaticAberration')}
                       checked={appSettings?.adjustmentVisibility?.chromaticAberration ?? false}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -646,7 +642,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label="Grain"
+                      label={t('settings.adjustmentsVisibility.grain')}
                       checked={appSettings?.adjustmentVisibility?.grain ?? true}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -659,7 +655,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label="Color Calibration"
+                      label={t('settings.adjustmentsVisibility.colorCalibration')}
                       checked={appSettings?.adjustmentVisibility?.colorCalibration ?? true}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -672,7 +668,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label="Negative Conversion"
+                      label={t('settings.adjustmentsVisibility.negativeConversion')}
                       checked={appSettings?.adjustmentVisibility?.negativeConversion ?? false}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -688,16 +684,16 @@ export default function SettingsPanel({
                 </div>
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
-                  <h2 className="text-xl font-semibold mb-6 text-accent">Tagging</h2>
+                  <h2 className="text-xl font-semibold mb-6 text-accent">{t('settings.tagging.title')}</h2>
                   <div className="space-y-6">
                     <SettingItem
-                      description="Enables automatic image tagging using an AI (CLIP) model. This will download an additional model and impact performance while browsing folders. Tags are used for searching a folder."
-                      label="AI Tagging"
+                      description={t('settings.tagging.automaticAiTaggingDescription')}
+                      label={t('settings.tagging.aiTagging')}
                     >
                       <Switch
                         checked={appSettings?.enableAiTagging ?? false}
                         id="ai-tagging-toggle"
-                        label="Automatic AI Tagging"
+                        label={t('settings.tagging.automaticAiTagging')}
                         onChange={(checked) => onSettingsChange({ ...appSettings, enableAiTagging: checked })}
                       />
                     </SettingItem>
@@ -736,7 +732,7 @@ export default function SettingsPanel({
                                 transition={{ duration: 0.2 }}
                                 className="text-sm text-text-secondary italic px-1 select-none"
                               >
-                                No shortcuts added
+                                {t('settings.shortcuts.noShortcutsAdded')}
                               </motion.span>
                             )}
                           </AnimatePresence>
@@ -765,23 +761,23 @@ export default function SettingsPanel({
                       <div className="space-y-6">
                         <DataActionItem
                           buttonAction={handleClearAiTags}
-                          buttonText="Clear AI Tags"
-                          description="This will remove all AI-generated tags from your .rrdata files in the current base folder. User-added tags will be kept."
+                          buttonText={t('settings.dataActions.clearAiTags')}
+                          description={t('settings.dataManagement.clearAiTagsDescription')}
                           disabled={!effectiveRootPath}
                           icon={<Trash2 size={16} className="mr-2" />}
                           isProcessing={isClearingAiTags}
                           message={aiTagsClearMessage}
-                          title="Clear AI Tags"
+                          title={t('settings.dataActions.clearAiTags')}
                         />
                         <DataActionItem
                           buttonAction={handleClearTags}
-                          buttonText="Clear All Tags"
-                          description="This will remove all AI-generated and user-added tags from your .rrdata files in the current base folder. Color labels will be kept."
+                          buttonText={t('settings.dataActions.clearAllTags')}
+                          description={t('settings.dataManagement.clearAllTagsDescription')}
                           disabled={!effectiveRootPath}
                           icon={<Trash2 size={16} className="mr-2" />}
                           isProcessing={isClearingTags}
                           message={tagsClearMessage}
-                          title="Clear All Tags"
+                          title={t('settings.dataActions.clearAllTags')}
                         />
                       </div>
                     </div>
