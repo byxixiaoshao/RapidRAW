@@ -73,11 +73,6 @@
     "linear": "Linear",
     "radial": "Radial"
   },
-  "presets": {
-    "title": "Presets",
-    "noPresetsSaved": "No presets saved yet. Create your own, import from files, or explore community presets.",
-    "getCommunityPresets": "Get Community Presets"
-  },
   "masking": {
     "title": "Masking",
     "createNewMask": "Create New Mask",
@@ -92,20 +87,6 @@
     "noMasksCreated": "No masks created.",
     "resetAllMasks": "Reset All Masks"
   },
-  "crop": {
-    "title": "Crop & Transform",
-    "aspectRatio": "Aspect Ratio",
-    "free": "Free",
-    "original": "Original",
-    "custom": "Custom",
-    "rotation": "Rotation",
-    "rotateLeft": "Rotate Left",
-    "rotateRight": "Rotate Right",
-    "flipHoriz": "Flip Horizontal",
-    "flipVert": "Flip Vertical",
-    "straighten": "Straighten",
-    "transform": "Transform"
-  },
   "library": {
     "folders": "Folders",
     "images": "Images",
@@ -113,7 +94,30 @@
     "filter": "Filter",
     "search": "Search",
     "rating": "Rating",
-    "tags": "Tags"
+    "tags": "Tags",
+    "ratingFilter": {
+      "showAll": "Show All",
+      "oneAndUp": "1 & up",
+      "twoAndUp": "2 & up",
+      "threeAndUp": "3 & up",
+      "fourAndUp": "4 & up",
+      "fiveOnly": "5 only"
+    },
+    "rawStatus": {
+      "allTypes": "All Types",
+      "rawOnly": "RAW Only",
+      "nonRawOnly": "Non-RAW Only",
+      "preferRaw": "Prefer RAW"
+    },
+    "thumbnailSize": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "thumbnailAspectRatio": {
+      "fillSquare": "Fill Square",
+      "originalRatio": "Original Ratio"
+    }
   },
   "export": {
     "title": "Export",
@@ -146,7 +150,9 @@
     "exportComplete": "Export complete!",
     "exportFailed": "Export failed",
     "exportSuccessful": "Export successful!",
-    "exportCancelled": "Export cancelled."
+    "exportCancelled": "Export cancelled.",
+    "image": "image",
+    "images": "images"
   },
   "settings": {
     "title": "Settings",
@@ -563,6 +569,14 @@
     "quickEraseFailed": "Quick Erase Failed",
     "aiMaskFailed": "AI Mask Failed"
   },
+  "welcome": {
+    "welcomeBack": "Welcome back!",
+    "continueWhereLeftOff": "Continue where you left off or start a new session.",
+    "noFolderOpened": "A blazingly fast, GPU-accelerated RAW image editor. Open a folder to begin.",
+    "continueSession": "Continue Session",
+    "changeFolder": "Change Folder",
+    "openFolder": "Open Folder"
+  },
   "basic": {
     "brightness": "Brightness",
     "contrast": "Contrast",
@@ -594,6 +608,31 @@
     "colorCalibration": "Color Calibration",
     "primaries": "Primaries",
     "whiteBalancePickerTooltip": "White Balance Picker (Click to pick a neutral grey area)"
+  },
+  "crop": {
+    "title": "Crop & Transform",
+    "aspectRatio": "Aspect Ratio",
+    "custom": "Custom",
+    "rotation": "Rotation",
+    "tools": "Tools",
+    "rotateLeft": "Rotate Left",
+    "rotateRight": "Rotate Right",
+    "flipHorizontal": "Flip Horiz",
+    "flipVertical": "Flip Vert",
+    "straighten": "Straighten",
+    "cancel": "Cancel",
+    "transform": "Transform",
+    "noImageSelected": "No image selected."
+  },
+  "presets": {
+    "title": "Presets",
+    "exploreCommunity": "Explore Community Presets",
+    "importFromFile": "Import presets from .rrpreset file",
+    "exportToFile": "Export all presets to .rrpreset file",
+    "saveCurrentSettings": "Save current settings as new preset",
+    "loading": "Loading Presets...",
+    "noPresetsSaved": "No presets saved yet. Create your own, import from a file, or explore community presets.",
+    "getCommunity": "Get Community Presets"
   },
   "details": {
     "sharpening": "Sharpening",

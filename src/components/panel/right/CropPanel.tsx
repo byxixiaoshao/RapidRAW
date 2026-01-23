@@ -10,6 +10,7 @@ import {
   Scan,
   X,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Adjustments, INITIAL_ADJUSTMENTS } from '../../../utils/adjustments';
 import clsx from 'clsx';
 import { Orientation, SelectedImage } from '../../ui/AppProperties';
@@ -51,6 +52,7 @@ export default function CropPanel({
   setAdjustments,
   setIsStraightenActive,
 }: CropPanelProps) {
+  const { t } = useTranslation();
   const [customW, setCustomW] = useState('');
   const [customH, setCustomH] = useState('');
   const [isTransformModalOpen, setIsTransformModalOpen] = useState(false);
@@ -289,7 +291,7 @@ export default function CropPanel({
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface">
-        <h2 className="text-xl font-bold text-primary text-shadow-shiny">Crop & Transform</h2>
+        <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('crop.title')}</h2>
         <button className="p-2 rounded-full hover:bg-surface transition-colors" onClick={handleReset} title="Reset All">
           <RotateCcw size={18} />
         </button>
@@ -300,7 +302,7 @@ export default function CropPanel({
           <>
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-3">
-                <p className="text-sm font-semibold text-text-primary">Aspect Ratio</p>
+                <p className="text-sm font-semibold text-text-primary">{t('crop.aspectRatio')}</p>
                 <button
                   className="p-1.5 rounded-md hover:bg-surface disabled:text-text-tertiary disabled:cursor-not-allowed"
                   disabled={isOrientationToggleDisabled}
@@ -347,7 +349,7 @@ export default function CropPanel({
                     }));
                   }}
                 >
-                  Custom
+                  {t('crop.custom')}
                 </button>
                 <div
                   className={clsx(
@@ -385,7 +387,7 @@ export default function CropPanel({
             </div>
 
             <div className="space-y-4">
-              <p className="text-sm mb-3 font-semibold text-text-primary">Rotation</p>
+              <p className="text-sm mb-3 font-semibold text-text-primary">{t('crop.rotation')}</p>
               <div className="bg-surface px-4 py-3 pb-4 rounded-lg">
                 <div className="flex justify-between items-center mb-3">
                   <span className="font-mono text-lg text-text-primary">{rotation.toFixed(1)}°</span>
@@ -424,21 +426,21 @@ export default function CropPanel({
             </div>
 
             <div className="space-y-4">
-              <p className="text-sm mb-3 font-semibold text-text-primary">Tools</p>
+              <p className="text-sm mb-3 font-semibold text-text-primary">{t('crop.tools')}</p>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   className="flex flex-col items-center justify-center p-3 rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(-90)}
                 >
                   <RotateCcw size={20} className="transition-none" />
-                  <span className="text-xs mt-1.5 transition-none">Rotate Left</span>
+                  <span className="text-xs mt-1.5 transition-none">{t('crop.rotateLeft')}</span>
                 </button>
                 <button
                   className="flex flex-col items-center justify-center p-3 rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(90)}
                 >
                   <RotateCw size={20} className="transition-none" />
-                  <span className="text-xs mt-1.5 transition-none">Rotate Right</span>
+                  <span className="text-xs mt-1.5 transition-none">{t('crop.rotateRight')}</span>
                 </button>
                 <button
                   className={clsx(
@@ -455,7 +457,7 @@ export default function CropPanel({
                   }
                 >
                   <FlipHorizontal size={20} className="transition-none" />
-                  <span className="text-xs mt-1.5 transition-none">Flip Horiz</span>
+                  <span className="text-xs mt-1.5 transition-none">{t('crop.flipHorizontal')}</span>
                 </button>
                 <button
                   className={clsx(
@@ -469,7 +471,7 @@ export default function CropPanel({
                   }
                 >
                   <FlipVertical size={20} className="transition-none" />
-                  <span className="text-xs mt-1.5 transition-none">Flip Vert</span>
+                  <span className="text-xs mt-1.5 transition-none">{t('crop.flipVertical')}</span>
                 </button>
                 <button
                   className={clsx(
@@ -491,7 +493,7 @@ export default function CropPanel({
                   <Ruler size={20} className="transition-none" />
                   <span className="relative text-xs mt-1.5 h-4 flex items-center justify-center transition-none">
                     <span className={clsx('transition-none', isStraightenActive && 'group-hover:opacity-0')}>
-                      Straighten
+                      {t('crop.straighten')}
                     </span>
                     <span
                       className={clsx(
@@ -499,7 +501,7 @@ export default function CropPanel({
                         isStraightenActive && 'group-hover:opacity-100',
                       )}
                     >
-                      Cancel
+                      {t('crop.cancel')}
                     </span>
                   </span>
                 </button>
@@ -509,13 +511,13 @@ export default function CropPanel({
                   onClick={() => setIsTransformModalOpen(true)}
                 >
                   <Scan size={20} className="transition-none" />
-                  <span className="text-xs mt-1.5 transition-none">Transform</span>
+                  <span className="text-xs mt-1.5 transition-none">{t('crop.transform')}</span>
                 </button>
               </div>
             </div>
           </>
         ) : (
-          <p className="text-center text-text-tertiary mt-4">No image selected.</p>
+          <p className="text-center text-text-tertiary mt-4">{t('crop.noImageSelected')}</p>
         )}
       </div>
 

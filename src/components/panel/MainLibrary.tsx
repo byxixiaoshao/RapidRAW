@@ -1165,6 +1165,7 @@ export default function MainLibrary({
   thumbnailSize,
   onNavigateToCommunity,
 }: MainLibraryProps) {
+  const { t } = useTranslation();
   const [showSettings, setShowSettings] = useState(false);
   const [appVersion, setAppVersion] = useState('');
   const [supportedTypes, setSupportedTypes] = useState<SupportedTypes | null>(null);
@@ -1424,12 +1425,12 @@ export default function MainLibrary({
                 <p className="text-text-secondary mb-10 max-w-md">
                   {hasLastPath ? (
                     <>
-                      Welcome back!
+                      {t('welcome.welcomeBack')}
                       <br />
-                      Continue where you left off or start a new session.
+                      {t('welcome.continueWhereLeftOff')}
                     </>
                   ) : (
-                    'A blazingly fast, GPU-accelerated RAW image editor. Open a folder to begin.'
+                    t('welcome.noFolderOpened')
                   )}
                 </p>
                 <div className="flex flex-col w-full max-w-xs gap-4">
@@ -1439,7 +1440,7 @@ export default function MainLibrary({
                       onClick={onContinueSession}
                       size="lg"
                     >
-                      <RefreshCw size={20} className="mr-2" /> Continue Session
+                      <RefreshCw size={20} className="mr-2" /> {t('welcome.continueSession')}
                     </Button>
                   )}
                   <div className="flex items-center gap-2">
@@ -1451,7 +1452,7 @@ export default function MainLibrary({
                       size="lg"
                     >
                       <Folder size={20} className="mr-2" />
-                      {hasLastPath ? 'Change Folder' : 'Open Folder'}
+                      {hasLastPath ? t('welcome.changeFolder') : t('welcome.openFolder')}
                     </Button>
                     <Button
                       className="px-3 bg-surface text-text-primary shadow-none h-11"

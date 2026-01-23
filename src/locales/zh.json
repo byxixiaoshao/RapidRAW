@@ -73,11 +73,6 @@
     "linear": "线性",
     "radial": "径向"
   },
-  "presets": {
-    "title": "预设",
-    "noPresetsSaved": "尚未保存预设。创建您自己的、从文件导入或探索社区预设。",
-    "getCommunityPresets": "获取社区预设"
-  },
   "masking": {
     "title": "蒙版",
     "createNewMask": "创建新蒙版",
@@ -92,20 +87,6 @@
     "noMasksCreated": "未创建蒙版。",
     "resetAllMasks": "重置所有蒙版"
   },
-  "crop": {
-    "title": "裁剪与变换",
-    "aspectRatio": "宽高比",
-    "free": "自由",
-    "original": "原始",
-    "custom": "自定义",
-    "rotation": "旋转",
-    "rotateLeft": "向左旋转",
-    "rotateRight": "向右旋转",
-    "flipHoriz": "水平翻转",
-    "flipVert": "垂直翻转",
-    "straighten": "拉直",
-    "transform": "变换"
-  },
   "library": {
     "folders": "文件夹",
     "images": "图片",
@@ -114,7 +95,30 @@
     "search": "搜索",
     "rating": "评分",
     "tags": "标签",
-    "noImagesFound": "未找到匹配筛选条件的图像。"
+    "noImagesFound": "未找到匹配筛选条件的图像。",
+    "ratingFilter": {
+      "showAll": "显示全部",
+      "oneAndUp": "1 星及以上",
+      "twoAndUp": "2 星及以上",
+      "threeAndUp": "3 星及以上",
+      "fourAndUp": "4 星及以上",
+      "fiveOnly": "仅 5 星"
+    },
+    "rawStatus": {
+      "allTypes": "所有类型",
+      "rawOnly": "仅 RAW",
+      "nonRawOnly": "仅非 RAW",
+      "preferRaw": "优先 RAW"
+    },
+    "thumbnailSize": {
+      "small": "小",
+      "medium": "中",
+      "large": "大"
+    },
+    "thumbnailAspectRatio": {
+      "fillSquare": "填充正方形",
+      "originalRatio": "原始比例"
+    }
   },
   "metadata": {
     "title": "元数据",
@@ -123,19 +127,17 @@
     "dimensions": "尺寸",
     "noExifFound": "在此文件中未找到 EXIF 数据。"
   },
-  "welcome": {
-    "welcomeBack": "欢迎回来！",
-    "continueSession": "继续会话",
-    "changeFolder": "更改文件夹",
-    "continueWhereLeftOff": "继续您上次的工作或开始新会话。"
-  },
+
   "export": {
     "title": "导出",
     "exportPresets": "导出预设",
     "selectAPreset": "选择预设...",
     "fileSettings": "文件设置",
     "fileNaming": "文件命名",
+    "format": "格式",
     "quality": "质量",
+    "size": "大小",
+    "destination": "目标位置",
     "imageSizing": "图像尺寸",
     "resizeToFit": "调整大小以适应",
     "dontEnlarge": "不放大",
@@ -158,7 +160,10 @@
     "exportComplete": "导出完成！",
     "exportFailed": "导出失败",
     "exportSuccessful": "导出成功！",
-    "exportCancelled": "导出已取消。"
+    "exportCancelled": "导出已取消。",
+    "export": "导出",
+    "image": "图像",
+    "images": "图像"
   },
   "settings": {
     "title": "设置",
@@ -641,6 +646,14 @@
     "quickEraseFailed": "快速擦除失败",
     "aiMaskFailed": "AI 蒙版失败"
   },
+  "welcome": {
+    "welcomeBack": "欢迎回来！",
+    "continueWhereLeftOff": "继续您上次的工作或开始新会话。",
+    "noFolderOpened": "一款速度飞快、GPU 加速的 RAW 图像编辑器。打开一个文件夹开始使用。",
+    "continueSession": "继续会话",
+    "changeFolder": "更改文件夹",
+    "openFolder": "打开文件夹"
+  },
   "basic": {
     "brightness": "亮度",
     "contrast": "对比度",
@@ -673,6 +686,31 @@
     "primaries": "原色",
     "whiteBalancePickerTooltip": "白平衡选择器（点击选择中性灰色区域）"
   },
+  "crop": {
+    "title": "裁剪与变换",
+    "aspectRatio": "宽高比",
+    "custom": "自定义",
+    "rotation": "旋转",
+    "tools": "工具",
+    "rotateLeft": "向左旋转",
+    "rotateRight": "向右旋转",
+    "flipHorizontal": "水平翻转",
+    "flipVertical": "垂直翻转",
+    "straighten": "拉直",
+    "cancel": "取消",
+    "transform": "变换",
+    "noImageSelected": "未选择图片。"
+  },
+  "presets": {
+    "title": "预设",
+    "exploreCommunity": "探索社区预设",
+    "importFromFile": "从 .rrpreset 文件导入预设",
+    "exportToFile": "将所有预设导出到 .rrpreset 文件",
+    "saveCurrentSettings": "将当前设置保存为新预设",
+    "loading": "正在加载预设...",
+    "noPresetsSaved": "尚未保存预设。创建您自己的预设，从文件导入，或探索社区预设。",
+    "getCommunity": "获取社区预设"
+  },
   "details": {
     "sharpening": "锐化",
     "sharpness": "锐度",
@@ -701,5 +739,18 @@
     "grain": "颗粒感",
     "size": "大小",
     "roughness": "粗糙度"
+  },
+  "community": {
+    "title": "社区预设",
+    "description": "发现社区创建的预设。",
+    "searchPlaceholder": "搜索预设...",
+    "sortBy": "排序方式:",
+    "sortByName": "名称 (A-Z)",
+    "loading": "正在从 GitHub 获取预设...",
+    "save": "保存",
+    "saving": "保存中...",
+    "saved": "已保存",
+    "featured": "想让你的预设被推荐吗？",
+    "createIssue": "在 GitHub 上创建 issue"
   }
 }
