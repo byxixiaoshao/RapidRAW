@@ -152,7 +152,9 @@
     "exportSuccessful": "Export successful!",
     "exportCancelled": "Export cancelled.",
     "image": "image",
-    "images": "images"
+    "images": "images",
+    "preview": "Preview",
+    "logo": "Logo"
   },
   "settings": {
     "title": "Settings",
@@ -704,7 +706,10 @@
     "centre": "Centre",
     "chromaticAberration": "Chromatic Aberration",
     "redCyan": "Red/Cyan",
-    "blueYellow": "Blue/Yellow"
+    "blueYellow": "Blue/Yellow",
+    "noiseReduction": "Noise Reduction",
+    "luminance": "Luminance",
+    "color": "Color"
   },
   "effects": {
     "lut": "LUT",
@@ -762,15 +767,6 @@
     "dimensions": "Dimensions",
     "captureDate": "Capture Date",
     "openMap": "Click to open map in a new tab"
-  },
-  "export": {
-    "preview": "Preview",
-    "logo": "Logo"
-  },
-  "details": {
-    "noiseReduction": "Noise Reduction",
-    "luminance": "Luminance",
-    "color": "Color"
   },
   "tagging": {
     "addTagPlaceholder": "Add a tag...",

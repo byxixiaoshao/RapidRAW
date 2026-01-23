@@ -163,7 +163,9 @@
     "exportCancelled": "导出已取消。",
     "export": "导出",
     "image": "图像",
-    "images": "图像"
+    "images": "图像",
+    "preview": "预览",
+    "logo": "标志"
   },
   "settings": {
     "title": "设置",
@@ -763,7 +765,10 @@
     "centre": "中心",
     "chromaticAberration": "色差",
     "redCyan": "红/青",
-    "blueYellow": "蓝/黄"
+    "blueYellow": "蓝/黄",
+    "noiseReduction": "降噪",
+    "luminance": "明度",
+    "color": "色彩"
   },
   "effects": {
     "lut": "LUT",
@@ -827,15 +832,6 @@
   },
   "colorWheel": {
     "resetTooltip": "双击重置"
-  },
-  "export": {
-    "preview": "预览",
-    "logo": "标志"
-  },
-  "details": {
-    "noiseReduction": "降噪",
-    "luminance": "明度",
-    "color": "色彩"
   },
   "tagging": {
     "addTagPlaceholder": "添加标签...",
