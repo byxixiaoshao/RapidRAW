@@ -666,7 +666,23 @@
     "straighten": "Straighten",
     "cancel": "Cancel",
     "transform": "Transform",
-    "noImageSelected": "No image selected."
+    "noImageSelected": "No image selected.",
+    "resetAll": "Reset All",
+    "switchOrientation": "Switch Orientation",
+    "widthPlaceholder": "W",
+    "heightPlaceholder": "H",
+    "resetFineRotation": "Reset Fine Rotation",
+    "presets": {
+      "free": "Free",
+      "original": "Original",
+      "1x1": "1:1",
+      "5x4": "5:4",
+      "4x3": "4:3",
+      "3x2": "3:2",
+      "16x9": "16:9",
+      "21x9": "21:9",
+      "65x24": "65:24"
+    }
   },
   "presets": {
     "title": "Presets",
@@ -746,81 +762,6 @@
     "dimensions": "Dimensions",
     "captureDate": "Capture Date",
     "openMap": "Click to open map in a new tab"
-  },
-  "mainLibrary": {
-    "search": {
-      "placeholder": "Search by tag or filename...",
-      "addTag": "Add another tag...",
-      "indexing": "Indexing Images...",
-      "indexingProgress": "Indexing... ({{current}}/{{total}})",
-      "separateTags": "Separate tags with {{comma}}",
-      "clear": "Clear search",
-      "title": "Search"
-    },
-    "filters": {
-      "colorLabel": "Filter by Color Label",
-      "noLabel": "No Label"
-    },
-    "thumbnail": {
-      "size": "Thumbnail Size",
-      "aspectRatio": "Thumbnail Aspect Ratio",
-      "small": "Small",
-      "medium": "Medium",
-      "large": "Large",
-      "fillSquare": "Fill Square",
-      "originalRatio": "Original Ratio"
-    },
-    "viewMode": {
-      "grid": "Grid",
-      "list": "List"
-    },
-    "sort": {
-      "by": "Sort by:",
-      "name": "Name",
-      "dateModified": "Date Modified",
-      "dateCreated": "Date Created",
-      "size": "Size",
-      "rating": "Rating"
-    },
-    "noResults": {
-      "title": "No Results Found",
-      "search": "Could not find an image based on filename or tags.",
-      "filter": "No images found that match your filter."
-    },
-    "folders": {
-      "home": "Home",
-      "openFolder": "Open Folder",
-      "refresh": "Refresh"
-    },
-    "settings": {
-      "title": "Settings",
-      "appearance": "Appearance"
-    },
-    "community": {
-      "title": "Community"
-    },
-    "indexing": {
-      "title": "Indexing Images",
-      "description": "Please wait while we index your images..."
-    },
-    "appTitle": "RapidRAW",
-    "loadingSettings": "Loading settings...",
-    "newVersionAvailable": "New version available!",
-    "or": "or",
-    "libraryTitle": "Library",
-    "importComplete": "Import Complete!",
-    "importFailed": "Import Failed!",
-    "communityPresets": "Community Presets",
-    "openAnotherFolder": "Open another folder",
-    "goToHomeScreen": "Go to Home Screen",
-    "indexingMessage": "This may take a moment."
-  },
-  "crop": {
-    "resetAll": "Reset All",
-    "switchOrientation": "Switch Orientation",
-    "widthPlaceholder": "W",
-    "heightPlaceholder": "H",
-    "resetFineRotation": "Reset Fine Rotation"
   },
   "export": {
     "preview": "Preview",
