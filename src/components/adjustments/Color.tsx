@@ -10,6 +10,7 @@ import {
 } from '../../utils/adjustments';
 import { Adjustments, ColorGrading } from '../../utils/adjustments';
 import { AppSettings } from '../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
 
 interface ColorProps {
   color: string;
@@ -56,6 +57,7 @@ const ColorSwatch = ({ color, name, isActive, onClick }: ColorSwatchProps) => (
 );
 
 const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: ColorPanelProps) => {
+  const { t } = useTranslation();
   const colorGrading = adjustments.colorGrading || INITIAL_ADJUSTMENTS.colorGrading;
 
   const handleChange = (grading: ColorGrading, newValue: HueSatLum) => {
@@ -84,7 +86,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
         <div className="w-[calc(50%-0.5rem)]">
           <ColorWheel
             defaultValue={INITIAL_ADJUSTMENTS.colorGrading.midtones}
-            label="Midtones"
+            label={t('color.midtones')}
             onChange={(val: HueSatLum) => handleChange(ColorGrading.Midtones, val)}
             value={colorGrading.midtones}
             onDragStateChange={onDragStateChange}
@@ -95,7 +97,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
         <div className="w-full">
           <ColorWheel
             defaultValue={INITIAL_ADJUSTMENTS.colorGrading.shadows}
-            label="Shadows"
+            label={t('color.shadows')}
             onChange={(val: HueSatLum) => handleChange(ColorGrading.Shadows, val)}
             value={colorGrading.shadows}
             onDragStateChange={onDragStateChange}
@@ -104,7 +106,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
         <div className="w-full">
           <ColorWheel
             defaultValue={INITIAL_ADJUSTMENTS.colorGrading.highlights}
-            label="Highlights"
+            label={t('color.highlights')}
             onChange={(val: HueSatLum) => handleChange(ColorGrading.Highlights, val)}
             value={colorGrading.highlights}
             onDragStateChange={onDragStateChange}
@@ -114,7 +116,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
       <div>
         <Slider
           defaultValue={50}
-          label="Blending"
+          label={t('color.blending')}
           max={100}
           min={0}
           onChange={(e: any) => handleGlobalChange(ColorGrading.Blending, e.target.value)}
@@ -124,7 +126,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
         />
         <Slider
           defaultValue={0}
-          label="Balance"
+          label={t('color.balance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorGrading.Balance, e.target.value)}
@@ -138,6 +140,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
 };
 
 const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange }: ColorPanelProps) => {
+  const { t } = useTranslation();
   const [activePrimary, setActivePrimary] = useState('red');
   const colorCalibration = adjustments.colorCalibration || INITIAL_ADJUSTMENTS.colorCalibration;
 
@@ -175,11 +178,11 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
 
   return (
     <div className="p-2 bg-bg-tertiary rounded-md mt-4">
-      <p className="text-md font-semibold mb-3 text-primary">Color Calibration</p>
+      <p className="text-md font-semibold mb-3 text-primary">{t('color.colorCalibration')}</p>
       <div>
-        <p className="text-sm font-medium mb-1 text-secondary">Shadows</p>
+        <p className="text-sm font-medium mb-1 text-secondary">{t('color.shadows')}</p>
         <Slider
-          label="Tint"
+          label={t('color.tint')}
           min={-100}
           max={100}
           step={1}
@@ -190,7 +193,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
         />
       </div>
       <div className="mt-3">
-        <p className="text-sm font-medium mb-3 text-secondary">Primaries</p>
+        <p className="text-sm font-medium mb-3 text-secondary">{t('color.primaries')}</p>
         <div className="flex justify-center gap-6 mb-4 px-1">
           {PRIMARY_COLORS.map(({ name, color }) => (
             <ColorSwatch
@@ -203,7 +206,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
           ))}
         </div>
         <Slider
-          label="Hue"
+          label={t('color.hue')}
           min={-100}
           max={100}
           step={1}
@@ -213,7 +216,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Saturation"
+          label={t('color.saturation')}
           min={-100}
           max={100}
           step={1}
@@ -236,6 +239,7 @@ export default function ColorPanel({
   toggleWbPicker,
   onDragStateChange,
 }: ColorPanelProps) {
+  const { t } = useTranslation();
   const [activeColor, setActiveColor] = useState('reds');
   const adjustmentVisibility = appSettings?.adjustmentVisibility || {};
 
@@ -262,7 +266,7 @@ export default function ColorPanel({
     <div>
       <div className="mb-4 p-2 bg-bg-tertiary rounded-md">
         <div className="flex justify-between items-center mb-2">
-          <p className="text-md font-semibold text-primary">White Balance</p>
+          <p className="text-md font-semibold text-primary">{t('color.whiteBalance')}</p>
           {!isForMask && toggleWbPicker && (
             <button
               onClick={toggleWbPicker}
@@ -271,14 +275,14 @@ export default function ColorPanel({
                   ? 'bg-accent text-button-text'
                   : 'hover:bg-bg-secondary text-text-secondary'
               }`}
-              title="White Balance Picker (Click to pick a neutral grey area)"
+              title={t('color.whiteBalancePickerTooltip')}
             >
               <Pipette size={16} />
             </button>
           )}
         </div>
         <Slider
-          label="Temperature"
+          label={t('color.temperature')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Temperature, e.target.value)}
@@ -287,7 +291,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Tint"
+          label={t('color.tint')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Tint, e.target.value)}
@@ -298,9 +302,9 @@ export default function ColorPanel({
       </div>
 
       <div className="mb-4 p-2 bg-bg-tertiary rounded-md">
-        <p className="text-md font-semibold mb-2 text-primary">Presence</p>
+        <p className="text-md font-semibold mb-2 text-primary">{t('color.presence')}</p>
         <Slider
-          label="Vibrance"
+          label={t('color.vibrance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Vibrance, e.target.value)}
@@ -309,7 +313,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Saturation"
+          label={t('color.saturation')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Saturation, e.target.value)}
@@ -320,7 +324,7 @@ export default function ColorPanel({
       </div>
 
       <div className="p-2 bg-bg-tertiary rounded-md mt-4">
-        <p className="text-md font-semibold mb-3 text-primary">Color Grading</p>
+        <p className="text-md font-semibold mb-3 text-primary">{t('color.colorGrading')}</p>
         <ColorGradingPanel
           adjustments={adjustments}
           setAdjustments={setAdjustments}
@@ -330,7 +334,7 @@ export default function ColorPanel({
       </div>
 
       <div className="p-2 bg-bg-tertiary rounded-md mt-4">
-        <p className="text-md font-semibold mb-3 text-primary">Color Mixer</p>
+        <p className="text-md font-semibold mb-3 text-primary">{t('color.colorMixer')}</p>
         <div className="flex justify-between mb-4 px-1">
           {HSL_COLORS.map(({ name, color }) => (
             <ColorSwatch
@@ -343,7 +347,7 @@ export default function ColorPanel({
           ))}
         </div>
         <Slider
-          label="Hue"
+          label={t('color.hue')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Hue, e.target.value)}
@@ -352,7 +356,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Saturation"
+          label={t('color.saturation')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Saturation, e.target.value)}
@@ -361,7 +365,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Luminance"
+          label={t('color.luminance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Luminance, e.target.value)}

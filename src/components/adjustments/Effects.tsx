@@ -3,6 +3,7 @@ import Switch from '../ui/Switch';
 import { Adjustments, Effect } from '../../utils/adjustments';
 import LUTControl from '../ui/LUTControl';
 import { AppSettings } from '../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
 
 interface EffectsPanelProps {
   adjustments: Adjustments;
@@ -21,6 +22,7 @@ export default function EffectsPanel({
   appSettings,
   onDragStateChange,
 }: EffectsPanelProps) {
+  const { t } = useTranslation();
   const handleAdjustmentChange = (key: Effect, value: string) => {
     const numericValue = parseInt(value, 10);
     setAdjustments((prev: Partial<Adjustments>) => ({ ...prev, [key]: numericValue }));
@@ -56,7 +58,7 @@ export default function EffectsPanel({
       {!isForMask && (
         <>
           <div className="my-4 p-2 bg-bg-tertiary rounded-md">
-            <p className="text-md font-semibold mb-2 text-primary">LUT</p>
+            <p className="text-md font-semibold mb-2 text-primary">{t('effects.lut')}</p>
             <LUTControl
               lutName={adjustments.lutName || null}
               lutIntensity={adjustments.lutIntensity || 100}
@@ -69,10 +71,10 @@ export default function EffectsPanel({
 
           {adjustmentVisibility.negativeConversion !== false && (
             <div className="mb-4 p-2 bg-bg-tertiary rounded-md">
-              <p className="text-md font-semibold mb-2 text-primary">Negative Conversion</p>
+              <p className="text-md font-semibold mb-2 text-primary">{t('effects.negativeConversion')}</p>
               <div className="mb-2">
                 <Switch
-                  label="Enable"
+                  label={t('effects.enable')}
                   checked={!!adjustments.enableNegativeConversion}
                   onChange={(checked: boolean) => handleCheckedChange(Effect.EnableNegativeConversion, checked)}
                 />
@@ -81,7 +83,7 @@ export default function EffectsPanel({
                 <div className="space-y-2 mt-2 pt-2 border-t border-bg-secondary">
                   <div className="flex items-center justify-between">
                     <label htmlFor="filmBaseColor" className="text-sm font-medium text-text-primary">
-                      Film Base Color
+                      {t('effects.filmBaseColor')}
                     </label>
                     <input
                       className="p-0 h-8 w-12 border-none rounded-md cursor-pointer bg-bg-secondary"
@@ -92,7 +94,7 @@ export default function EffectsPanel({
                     />
                   </div>
                   <Slider
-                    label="Red Balance"
+                    label={t('effects.redBalance')}
                     max={100}
                     min={-100}
                     onChange={(e: any) => handleAdjustmentChange(Effect.NegativeRedBalance, e.target.value)}
@@ -101,7 +103,7 @@ export default function EffectsPanel({
                     onDragStateChange={onDragStateChange}
                   />
                   <Slider
-                    label="Green Balance"
+                    label={t('effects.greenBalance')}
                     max={100}
                     min={-100}
                     onChange={(e: any) => handleAdjustmentChange(Effect.NegativeGreenBalance, e.target.value)}
@@ -110,7 +112,7 @@ export default function EffectsPanel({
                     onDragStateChange={onDragStateChange}
                   />
                   <Slider
-                    label="Blue Balance"
+                    label={t('effects.blueBalance')}
                     max={100}
                     min={-100}
                     onChange={(e: any) => handleAdjustmentChange(Effect.NegativeBlueBalance, e.target.value)}
@@ -125,9 +127,9 @@ export default function EffectsPanel({
 
           {adjustmentVisibility.vignette !== false && (
             <div className="mb-4 p-2 bg-bg-tertiary rounded-md">
-              <p className="text-md font-semibold mb-2 text-primary">Vignette</p>
+              <p className="text-md font-semibold mb-2 text-primary">{t('effects.vignette')}</p>
               <Slider
-                label="Amount"
+                label={t('effects.amount')}
                 max={100}
                 min={-100}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteAmount, e.target.value)}
@@ -137,7 +139,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Midpoint"
+                label={t('effects.midpoint')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteMidpoint, e.target.value)}
@@ -146,7 +148,7 @@ export default function EffectsPanel({
                 onDragStateChange={onDragStateChange}
               />
               <Slider
-                label="Roundness"
+                label={t('effects.roundness')}
                 max={100}
                 min={-100}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteRoundness, e.target.value)}
@@ -156,7 +158,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Feather"
+                label={t('effects.feather')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteFeather, e.target.value)}
@@ -169,9 +171,9 @@ export default function EffectsPanel({
 
           {adjustmentVisibility.grain !== false && (
             <div className="p-2 bg-bg-tertiary rounded-md">
-              <p className="text-md font-semibold mb-2 text-primary">Grain</p>
+              <p className="text-md font-semibold mb-2 text-primary">{t('effects.grain')}</p>
               <Slider
-                label="Amount"
+                label={t('effects.amount')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainAmount, e.target.value)}
@@ -181,7 +183,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={25}
-                label="Size"
+                label={t('effects.size')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainSize, e.target.value)}
@@ -191,7 +193,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Roughness"
+                label={t('effects.roughness')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainRoughness, e.target.value)}
