@@ -609,7 +609,7 @@ export default function AIPanel({
     >
       <div className="flex flex-col h-full select-none overflow-hidden" onClick={handleDeselect}>
         <div className="p-4 flex justify-between items-center flex-shrink-0 border-b border-surface h-[69px]">
-          <h2 className="text-xl font-bold text-primary text-shadow-shiny">AI Tools</h2>
+          <h2 className="text-xl font-bold text-primary text-shadow-shiny">{t('aiTools.title')}</h2>
           <button
             className="p-2 rounded-full hover:bg-surface transition-colors"
             disabled={!adjustments.aiPatches?.length || isGeneratingAi}
@@ -628,7 +628,7 @@ export default function AIPanel({
               <>
                 <ConnectionStatus isConnected={isAIConnectorConnected} />
                 <p className="text-sm mb-3 font-semibold text-text-primary">
-                  {activePatchContainerId ? 'Add to Selection' : 'Create New Generative Edit'}
+                  {activePatchContainerId ? 'Add to Selection' : t('aiTools.createNewGenerativeEdit')}
                 </p>
                 <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                   {AI_PANEL_CREATION_TYPES.map((maskType: MaskType) => {
@@ -828,6 +828,18 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
     data: { type: 'Creation', maskType: maskType.type },
     disabled: isGenerating,
   });
+  const { t } = useTranslation();
+  
+  const getTranslatedName = () => {
+    if (maskType.type === Mask.QuickEraser) return t('aiTools.quickErase');
+    if (maskType.type === Mask.AiSubject) return t('aiTools.subject');
+    if (maskType.type === Mask.AiForeground) return t('aiTools.foreground');
+    if (maskType.type === Mask.Brush) return t('aiTools.brush');
+    if (maskType.type === Mask.Linear) return t('aiTools.linear');
+    if (maskType.type === Mask.Radial) return t('aiTools.radial');
+    return maskType.name;
+  };
+  
   return (
     <button
       ref={setNodeRef}
@@ -838,9 +850,9 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
       className={`bg-surface text-text-primary rounded-lg p-2 flex flex-col items-center justify-center gap-1.5 aspect-square transition-colors 
               ${maskType.disabled || isGenerating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-card-active active:bg-accent/20'} 
               ${isDragging ? 'opacity-50' : ''}`}
-      title={maskType.disabled ? 'Coming Soon' : `Add ${maskType.name}`}
+      title={maskType.disabled ? 'Coming Soon' : `Add ${getTranslatedName()}`}
     >
-      <maskType.icon size={24} /> <span className="text-xs">{maskType.name}</span>
+      <maskType.icon size={24} /> <span className="text-xs">{getTranslatedName()}</span>
     </button>
   );
 }

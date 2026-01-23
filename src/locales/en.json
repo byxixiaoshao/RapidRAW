@@ -175,16 +175,26 @@
       "adaptive": "Adaptive Editor Theme"
     },
     "exif": {
-      "label": "EXIF Library Sorting",
-      "description": "Read EXIF data (ISO, aperture, etc.) on folder load at the cost of slower folder loading when using EXIF sorting."
+      "label": "EXIF",
+      "description": "Read EXIF data (ISO, aperture, etc.) on folder load at the cost of slower folder loading when using EXIF sorting.",
+      "reading": "EXIF Reading"
     },
     "transparency": {
       "label": "Transparency",
-      "description": "Enable window transparency effects.",
+      "description": "Enable or disable application window transparency effects. Requires restart.",
+      "windowEffects": "Window Effects",
       "toggle": "Toggle Transparency",
       "confirm": "Confirm Window Transparency",
       "enableMessage": "Are you sure you want to enable window transparency effects?\n\nThese effects may reduce application performance.\n\nThe application will relaunch to make this change.",
       "disableMessage": "Are you sure you want to disable window transparency effects?\n\nThe application will relaunch to make this change."
+    },
+    "adjustmentsVisibility": {
+      "title": "Adjustments Visibility",
+      "description": "Hide adjustment sections you don't use often to simplify the editing panel. Your settings will be preserved and applied even when hidden.",
+      "chromaticAberration": "Chromatic Aberration",
+      "grain": "Grain",
+      "colorCalibration": "Color Calibration",
+      "negativeConversion": "Negative Conversion"
     },
     "dataActions": {
       "clearSidecars": "Delete All Edits",
@@ -203,12 +213,29 @@
     "processing": {
       "previewResolution": "Editor Preview Resolution",
       "previewResolutionDescription": "Adjust the resolution used for editor previews. Lower resolutions improve performance on slower machines.",
+      "highQualityZoom": "High Quality Zoom",
+      "highQualityZoomDescription": "Load a higher quality version of the image when zooming in for more detail. Disabling this can improve performance.",
+      "enableHighQualityZoom": "Enable High Quality Zoom",
+      "liveInteractivePreviews": "Live Interactive Previews",
+      "liveInteractivePreviewsDescription": "Update the preview immediately while dragging sliders. Disable this if the interface feels laggy during adjustments.",
+      "enableLivePreviews": "Enable Live Previews",
+      "highQualityLivePreview": "High Quality Live Preview",
+      "highQualityLivePreviewDescription": "Uses higher resolution and less compression during interaction. Significantly increases GPU load.",
+      "enableHighQuality": "Enable High Quality",
       "highlightCompression": "RAW Highlight Compression",
       "highlightCompressionDescription": "Adjust how aggressively highlights are compressed in RAW files.",
+      "highlightCompressionAmount": "Amount",
       "backend": "Processing Backend",
       "backendDescription": "Choose which graphics API to use for processing.",
+      "backendOptions": {
+        "auto": "Auto",
+        "webgl": "WebGL",
+        "webgpu": "WebGPU",
+        "cpu": "CPU"
+      },
       "linuxOptimization": "Linux GPU Optimization",
       "linuxOptimizationDescription": "Improves performance on Linux systems with certain GPUs.",
+      "linuxOptimizationLabel": "Enable Compatibility Mode",
       "restartRequired": "Restart Required",
       "saveAndRestart": "Save & Restart"
     },
@@ -217,19 +244,6 @@
       "taggingDescription": "Quickly apply these tags using keyboard shortcuts in the library.",
       "addShortcut": "Add Shortcut",
       "enterTag": "Enter tag..."
-    },
-    "ai": {
-      "provider": "AI Provider",
-      "providerDescription": "Choose how AI features are processed.",
-      "cpu": "CPU",
-      "aiConnector": "AI Connector",
-      "cloud": "Cloud",
-      "aiConnectorAddress": "AI Connector Address",
-      "aiConnectorAddressDescription": "Address of the AI Connector server (e.g., http://localhost:11434)",
-      "testConnection": "Test Connection",
-      "testing": "Testing...",
-      "connectionSuccess": "Connection successful!",
-      "connectionFailed": "Connection failed."
     },
     "labels": {
       "theme": "Theme",
@@ -314,6 +328,32 @@
       "comingSoon": "Coming Soon",
       "comingSoonDescription": "Keep an eye on the GitHub page to be notified when the cloud service is available.",
       "features": [
+        "Maximum convenience, no setup",
+        "Same results as self-hosting",
+        "No powerful hardware required"
+      ],
+      "description": "For those who want a simpler solution, an optional subscription provides the same high-quality results as self-hosting without any hassle. This is the most convenient option and the best way to support the project."
+    },
+    "ai": {
+      "generativeAi": "Generative AI",
+      "generativeAiDescription": "RapidRAW's AI is built for flexibility. Choose your ideal workflow, from fast local tools to powerful self-hosting.",
+      "cpu": "CPU",
+      "aiConnector": "AI Connector",
+      "cloud": "Cloud",
+      "cpuDescription": "Built-in AI (CPU)\nIntegrated directly into RapidRAW, these features run entirely on your computer. They are fast, free, and require no setup, making them ideal for everyday workflow acceleration.",
+      "cpuFeatures": [
+        "AI Masking (Subject, Sky, Foreground)",
+        "Automatic Image Tagging",
+        "Simple CPU-based Generative Replace"
+      ],
+      "aiConnectorDescription": "Self-Hosted (RapidRAW AI Connector)\nFor users with a capable GPU who want maximum control, connect RapidRAW to your own local AI Connector server. This gives you full control for technical workflows.",
+      "aiConnectorFeatures": [
+        "Use your own ComfyUI instance",
+        "Cost-free advanced generative edits",
+        "Custom workflow selection"
+      ],
+      "cloudDescription": "Cloud Service\nFor those who want a simpler solution, an optional subscription provides the same high-quality results as self-hosting without any hassle. This is the most convenient option and the best way to support the project.",
+      "cloudFeatures": [
         "Maximum convenience, no setup",
         "Same results as self-hosting",
         "No powerful hardware required"

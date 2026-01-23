@@ -186,16 +186,26 @@
       "adaptive": "自适应编辑器主题"
     },
     "exif": {
-      "label": "EXIF 库排序",
-      "description": "在文件夹加载时读取 EXIF 数据（ISO、光圈等），但使用 EXIF 排序时会减慢文件夹加载速度。"
+      "label": "EXIF",
+      "description": "在文件夹加载时读取 EXIF 数据（ISO、光圈等），但使用 EXIF 排序时会减慢文件夹加载速度。",
+      "reading": "EXIF 读取"
     },
     "transparency": {
       "label": "透明度",
-      "description": "启用窗口透明度效果。",
+      "description": "启用或禁用应用程序窗口的透明度效果。需要重启。",
+      "windowEffects": "窗口效果",
       "toggle": "切换透明度",
       "confirm": "确认窗口透明度",
       "enableMessage": "您确定要启用窗口透明度效果吗？\n\n这些效果可能会降低应用程序性能。\n\n应用程序将重新启动以进行此更改。",
       "disableMessage": "您确定要禁用窗口透明度效果吗？\n\n应用程序将重新启动以进行此更改。"
+    },
+    "adjustmentsVisibility": {
+      "title": "调整可见性",
+      "description": "隐藏不常用的调整部分，以简化编辑面板。即使隐藏，您的设置也会被保留和应用。",
+      "chromaticAberration": "色差",
+      "grain": "颗粒感",
+      "colorCalibration": "色彩校准",
+      "negativeConversion": "负片转换"
     },
     "dataActions": {
       "clearSidecars": "删除所有编辑",
@@ -216,19 +226,6 @@
       "taggingDescription": "在库中使用键盘快捷键快速应用这些标签。",
       "addShortcut": "添加快捷键",
       "enterTag": "输入标签..."
-    },
-    "ai": {
-      "provider": "AI 提供商",
-      "providerDescription": "选择如何处理 AI 功能。",
-      "cpu": "CPU",
-      "aiConnector": "AI 连接器",
-      "cloud": "云",
-      "aiConnectorAddress": "AI 连接器地址",
-      "aiConnectorAddressDescription": "AI 连接器服务器的地址（例如，http://localhost:11434）",
-      "testConnection": "测试连接",
-      "testing": "测试中...",
-      "connectionSuccess": "连接成功！",
-      "connectionFailed": "连接失败。"
     },
     "general": {
       "theme": "主题",
@@ -282,31 +279,31 @@
         "3840": "3840px"
       },
       "highQualityZoom": "高质量缩放",
-      "enableHighQualityZoom": "启用高质量缩放",
       "highQualityZoomDescription": "在放大时加载更高质量的图像版本以获得更多细节。禁用此选项可以提高性能。",
+      "enableHighQualityZoom": "启用高质量缩放",
       "liveInteractivePreviews": "实时交互式预览",
-      "enableLivePreviews": "启用实时预览",
       "liveInteractivePreviewsDescription": "在拖动滑块时立即更新预览。如果调整过程中界面感觉卡顿，请禁用此选项。",
+      "enableLivePreviews": "启用实时预览",
       "highQualityLivePreview": "高质量实时预览",
-      "enableHighQuality": "启用高质量",
       "highQualityLivePreviewDescription": "在交互过程中使用更高分辨率和更少压缩。这会显著增加 GPU 负载。",
-      "rawHighlightRecovery": "RAW 高光恢复",
-      "amount": "数量",
-      "rawHighlightRecoveryDescription": "控制从 RAW 文件中裁剪的高光中恢复多少细节。值越高，恢复的细节越多，但可能会引入紫色伪影。",
-      "processingBackend": "处理后端",
-      "processingBackendDescription": "选择图形 API。推荐使用 '自动'。在某些系统上可能会修复崩溃问题。",
-      "processingBackendOptions": {
+      "enableHighQuality": "启用高质量",
+      "highlightCompression": "RAW 高光压缩",
+      "highlightCompressionDescription": "调整 RAW 文件中高光的压缩程度。",
+      "highlightCompressionAmount": "数量",
+      "backend": "处理后端",
+      "backendDescription": "选择用于处理的图形 API。",
+      "backendOptions": {
         "auto": "自动",
         "webgl": "WebGL",
         "webgpu": "WebGPU",
         "cpu": "CPU"
       },
-      "linuxCompatibilityMode": "Linux 兼容模式",
-      "enableCompatibilityMode": "启用兼容模式",
-      "linuxCompatibilityModeDescription": "为常见的 GPU 驱动程序和显示服务器（例如 Wayland）问题启用变通方法。在某些系统上可能会提高稳定性或性能。",
+      "linuxOptimization": "Linux GPU 优化",
+      "linuxOptimizationDescription": "在某些 GPU 的 Linux 系统上提高性能。",
+      "linuxOptimizationLabel": "启用兼容模式",
       "restartRequired": "需要重启",
       "changesRequireRestart": "处理引擎的更改需要应用程序重启才能生效。",
-      "saveAndRelaunch": "保存并重启",
+      "saveAndRestart": "保存并重启",
       "generativeAi": "生成式 AI",
       "aiConnector": {
         "address": "AI Connector 地址",
@@ -396,11 +393,37 @@
     },
     "cloudService": {
       "comingSoon": "即将推出",
-      "comingSoonDescription": "密切关注 GitHub 页面，以便在云服务可用时收到通知。",
+      "comingSoonDescription": "请关注 GitHub 页面，以便在云服务可用时收到通知。",
       "features": [
-        "最大的便利性，无需设置",
+        "最大便利性，无需设置",
         "与自托管相同的结果",
-        "不需要强大的硬件"
+        "无需强大的硬件"
+      ],
+      "description": "对于那些想要更简单解决方案的用户，可选订阅提供与自托管相同的高质量结果，无需任何麻烦。这是最方便的选择，也是支持项目的最佳方式。"
+    },
+    "ai": {
+      "generativeAi": "生成式 AI",
+      "generativeAiDescription": "RapidRAW 的 AI 专为灵活性而设计。选择您理想的工作流程，从快速的本地工具到强大的自托管解决方案。",
+      "cpu": "CPU",
+      "aiConnector": "AI Connector",
+      "cloud": "云",
+      "cpuDescription": "内置 AI (CPU)\n这些功能直接集成到 RapidRAW 中，完全在您的计算机上运行。它们速度快、免费且无需设置，非常适合日常工作流程加速。",
+      "cpuFeatures": [
+        "AI 蒙版（主体、天空、前景）",
+        "自动图像标记",
+        "基于 CPU 的简单生成式替换"
+      ],
+      "aiConnectorDescription": "自托管 (RapidRAW AI Connector)\n对于拥有强大 GPU 并希望获得最大控制权的用户，可以将 RapidRAW 连接到您自己的本地 AI Connector 服务器。这为技术工作流程提供了完全的控制权。",
+      "aiConnectorFeatures": [
+        "使用您自己的 ComfyUI 实例",
+        "免费的高级生成式编辑",
+        "自定义工作流程选择"
+      ],
+      "cloudDescription": "云服务\n对于那些想要更简单解决方案的用户，可选订阅提供与自托管相同的高质量结果，无需任何麻烦。这是最方便的选择，也是支持项目的最佳方式。",
+      "cloudFeatures": [
+        "最大便利性，无需设置",
+        "与自托管相同的结果",
+        "无需强大的硬件"
       ]
     },
     "keyboardShortcuts": {

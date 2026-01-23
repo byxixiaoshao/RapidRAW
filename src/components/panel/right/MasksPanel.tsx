@@ -703,14 +703,26 @@ function DraggableGridItem({ maskType, onClick, isDraggable }: any) {
         data: { type: 'Creation', maskType: maskType.type },
         disabled: !isDraggable
     });
+    const { t } = useTranslation();
+    
+    const getTranslatedName = () => {
+        if (maskType.id === 'others') return t('masking.others');
+        if (maskType.type === Mask.AiSubject) return t('masking.subject');
+        if (maskType.type === Mask.AiSky) return t('masking.sky');
+        if (maskType.type === Mask.AiForeground) return t('masking.foreground');
+        if (maskType.type === Mask.Linear) return t('masking.linear');
+        if (maskType.type === Mask.Radial) return t('masking.radial');
+        return maskType.name;
+    };
+    
     return (
         <button
             ref={setNodeRef} {...listeners} {...attributes} disabled={maskType.disabled} onClick={onClick}
             className={`bg-surface text-text-primary rounded-lg p-2 flex flex-col items-center justify-center gap-1.5 aspect-square transition-colors 
                 ${maskType.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-card-active active:bg-accent/20'} ${isDragging ? 'opacity-50' : ''}`}
-            title={maskType.disabled ? 'Coming Soon' : `Add ${maskType.name}`}
+            title={maskType.disabled ? 'Coming Soon' : `Add ${getTranslatedName()}`}
         >
-            <maskType.icon size={24} /> <span className="text-xs">{maskType.name}</span>
+            <maskType.icon size={24} /> <span className="text-xs">{getTranslatedName()}</span>
         </button>
     );
 }
